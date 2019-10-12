@@ -17,13 +17,16 @@
     color:white;
     z-index: 100;
 }
-#nav-bar > h1 {
+#nav-bar > a {
     display: inline-block;
     width: 150px;
+    font-size: 22px;
+    color: white;
     font-weight: normal;
     line-height: 60px;
     text-align: left;
     padding-left: 30px;
+    text-decoration: none;
 }
 #nav-link {
     float: right;
@@ -134,6 +137,7 @@
     display: inline-block;
     border-bottom: 2px solid black;
     padding-bottom: 10px;
+    margin-bottom: 30px;
 }
 #project-list {
     position: relative;
