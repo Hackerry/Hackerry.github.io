@@ -4,6 +4,10 @@
     width:100%;
     font-family: sans-serif;
 }
+* > a {
+    text-decoration:none;
+    color:white;
+}
 
 /* Navigation begins */
 #nav-bar {
@@ -20,7 +24,7 @@
 #nav-bar > a {
     display: inline-block;
     width: 150px;
-    font-size: 22px;
+    font-size: 1.5em;
     color: white;
     font-weight: normal;
     line-height: 60px;
@@ -35,7 +39,7 @@
     padding-right: 20px;
     list-style: none;
     text-align: end;
-    font-size: 20px;
+    font-size: 1.2em;
 }
 #nav-link > li {
     display: inline;
@@ -59,7 +63,7 @@
 #banner-text{
     padding-top: 200px;
     color: white;
-    font-size: 26px;
+    font-size: 1.8em;
 }
 #welcome-text {
     opacity: 0;
@@ -99,7 +103,7 @@
 #about-para {
     padding-top: 20px;
     line-height: 40px;
-    font-size: 20px;
+    font-size: 1.2em;
 }
 #about-image {
     width: 400px;
@@ -115,10 +119,76 @@
     height: 250px;
 }
 #about-image > p {
-    font-size: 12px;
+    font-size: .8em;
     line-height: 20px;
 }
 /* About style ends */
+
+/* Skill style begins */
+#skill-root {
+    height: 700px;
+    text-align: center;
+    background-color: #f3efe0;
+}
+#skill-box {
+    margin: 0 auto;
+}
+#skill-header {
+    width: 400px;
+    display: inline-block;
+    line-height: 80px;
+    border-bottom: 2px solid black;
+    font-weight: normal;
+    text-align: center;
+}
+#skill-rating {
+    width: 400px;
+    list-style: none;
+    margin: 20px auto;
+    background-color: #5476c1;
+    color: white;
+    padding: 30px;
+    border-radius: 20px;
+    box-sizing: border-box;
+}
+#skill-rating > li {
+    line-height: 3em;
+    text-align: center;
+}
+#skill-rating > li > span {
+    text-align: left;
+}
+#skill-rating > li > span {
+    padding-right: 20px;
+    width: 100px;
+    font-weight: bold;
+    display: inline-block;
+}
+#skill-rating > span {
+    padding-right: 20px;
+}
+#skill-rating > li > i {
+    display: inline;
+}
+#resume-box {
+    margin: 20px auto;
+    width: 100px;
+    border: 2px solid white;
+    border-radius: 10px;
+    transition: all 0.4s;
+    box-sizing: border-box;
+}
+#resume-box:hover {
+    cursor: hand;
+}
+#resume-header {
+    font-size: 1.2em;
+}
+#resume-icon {
+    font-size: 3.2em;
+    padding-bottom: 20px;
+}
+/* Skill style ends */
 
 /* Project style begins */
 #project-root {
@@ -158,7 +228,7 @@
     transition: transform 200ms linear;
 }
 .project:hover {
-    transform: translate(-5px,-5px) scale(1.02);
+    transform: translate(-5px,-5px);
 }
 .project-inner-wrapper {
     width: 100%;
@@ -182,7 +252,7 @@
 /* Contact style begins */
 #contact-root {
     text-align: center;
-    height: 100px;
+    height: 150px;
     background-color: #5476c1;
     color: white;
 }
@@ -190,5 +260,11 @@
     font-size: 20px;
     line-height: 30px;
     padding-top: 35px;
+}
+#contact-root > a > i {
+    display: inline-block;
+    width: 50px;
+    font-size: 1.8em;
+    margin: 30px 0 0 0;
 }
 /* Contact style ends */
