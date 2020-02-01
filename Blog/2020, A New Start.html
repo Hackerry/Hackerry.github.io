@@ -2,12 +2,18 @@
     <head>
         <link rel='stylesheet' href='post.css'></link>
         <script src="https://kit.fontawesome.com/c9acfba105.js" crossorigin="anonymous"></script>
+        <script type='text/javascript'>
+            function gotop() {
+                document.body.scrollTop = 0;
+                document.documentElement.scrollTop = 0;
+            }
+        </script>
     </head>
 
     <body>
         <!-- Navigation section -->
         <nav id='nav-bar'>
-            <a href='hackerry.github.io'>Jiachen Niu</a>
+            <a href='../'>Jiachen Niu</a>
             <ul id='nav-link'>
                 <li><a href='../#banner'>Home</a></li>
                 <li><a href='../#project-root'>Projects</a></li>
@@ -15,6 +21,12 @@
                 <li><a href='../#contact-root'>Contact</a></li>
             </ul>
         </nav>
+
+        <!-- Go top icon -->
+        <div id='top-icon' onclick='gotop()'>
+            <p>Go Top</p>
+            <i class="fas fa-arrow-up"></i>
+        </div>
 
         <!-- Content section -->
         <div id='content-wrapper'>
