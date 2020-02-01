@@ -1,0 +1,53 @@
+<html>
+    <head>
+        <link rel='stylesheet' href='post.css'></link>
+        <link rel='stylesheet' href='blog_main.css'></link>
+        <script src="https://kit.fontawesome.com/c9acfba105.js" crossorigin="anonymous"></script>
+        <script type='text/javascript'>
+            function gotop() {
+                document.body.scrollTop = 0;
+                document.documentElement.scrollTop = 0;
+            }
+        </script>
+    </head>
+
+    <body>
+        <!-- Navigation section -->
+        <nav id='nav-bar'>
+            <a href='../'>Jiachen Niu</a>
+            <ul id='nav-link'>
+                <li><a href='../#banner'>Home</a></li>
+                <li><a href='../#project-root'>Projects</a></li>
+                <li><a href='../Blog/Blog_Main.html'>Blog</a></li>
+                <li><a href='../#contact-root'>Contact</a></li>
+            </ul>
+        </nav>
+
+        <!-- Go top icon -->
+        <div id='top-icon' onclick='gotop()'>
+            <p>Go Top</p>
+            <i class="fas fa-arrow-up"></i>
+        </div>
+
+        <!-- List of blogs section -->
+        <div id='content-wrapper'>
+            <div id='content'>
+                <h1>Blog Posts</h1>
+                <ul id='blog-list'>
+                    <!-- Populate Entries here TODO automate the process -->
+                    <li class='entry'>
+                        <a href='2020, A New Start.html'>2020, A New Start</a>
+                        <p class='post-date'>Jan. 31, 2020</p>
+                        <p class='post-overview'>It's the last day of January 2020 and the past month has been full of events and emotions.</p>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Contact Section -->
+        <div id='contact-root'>
+            <p>Contact at: harrynjc@gmail.com</p>
+            <a href="https://github.com/Hackerry"><i class="fab fa-github"></i></a>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,5 @@
+#blog-list {text-decoration:none;list-style:none;margin-top:50px;}
+.entry {margin-bottom:30px;padding-bottom:20px;}
+.entry > a {color:#636363;font-size:1.8em;font-weight:bold;}
+.post-date {margin-left:30px;display:inline;}
+.post-overview {margin-top:10px;padding-top:10px;border-top:1px solid #636363;}
