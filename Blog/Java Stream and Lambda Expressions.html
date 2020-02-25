@@ -1,0 +1,114 @@
+<html>
+    <head>
+        <link rel='stylesheet' href='post.css'></link>
+        <script src="https://kit.fontawesome.com/c9acfba105.js" crossorigin="anonymous"></script>
+        <script type='text/javascript'>
+            function gotop() {
+                document.body.scrollTop = 0;
+                document.documentElement.scrollTop = 0;
+            }
+        </script>
+    </head>
+
+    <body>
+        <!-- Navigation section -->
+        <nav id='nav-bar'>
+            <a href='../'>Jiachen Niu</a>
+            <ul id='nav-link'>
+                <li><a href='../#banner'>Home</a></li>
+                <li><a href='../#project-root'>Projects</a></li>
+                <li><a href='../Blog/Blog_Main.html'>Blog</a></li>
+                <li><a href='../#contact-root'>Contact</a></li>
+            </ul>
+        </nav>
+
+        <!-- Go top icon -->
+        <div id='top-icon' onclick='gotop()'>
+            <p>Go Top</p>
+            <i class="fas fa-arrow-up"></i>
+        </div>
+
+        <!-- Content section -->
+        <div id='content-wrapper'>
+            <div id='content'>
+                <h1>Java Stream and Lambda Expressions</h1>
+                <p id='content-date'>Feb. 24, 2020, 23:59:00</p>
+                <p>
+                    Welcome back! I'm happy that I haven't forgotten about my blog. I've been quite busy last month finishing my philosophy paper on "<i>Distributive Justice</i>" while also taking several midterms. Finally, I can take a break from my coursework and find some interesting stuff to learn over the weekend that I can write about.
+                </p>
+                <p>
+                    And that is <b>Java Stream &amp; Lambda Expressions</b>. I've been bothered by the fact that I haven't really taken time to learn these two new features introduced in Java 8 for quite a long time. And that ends today!
+                </p>
+                <p>
+                    <b>Disclaimer:</b> This is only a study note, not necessarily a techincal article. If you find errors in this note, please correct me by posting them as Issues.
+                </p>
+
+                <h2>Lambda Expressions</h2>
+                <p>
+                    I've used lambda expressions before in my JavaFX projects, mainly to save time typing anonymous event listeners. Now after I learned more on the subject, I find my initial thought is pretty accurate in defining the use of lambda expressions - <b>to save time typing</b>.
+                </p>
+                <p>Take comparators for example. Previously if you want to customize a comparator in Java, you would take one of the following ways:</p>
+                <p>
+                    <ol>
+                        <li>Define a new comparator class that extends <icode>Comparator&lt;T&gt;</icode> and overrides the <icode>compare()</icode> function (good for reuse)</li>
+                        <li>Define an anonymous <icode>Comparator&lt;T&gt;</icode> class and overrides the <icode>compare()</icode> function (good for single use)</li>
+                    </ol>
+                </p>
+                <p>In both cases, you would type a lot of words before defining the <icode>compare()</icode> method.</p>
+
+                    <ccode>
+
+                    </ccode>
+
+                <p>
+                    Now with lambda expressions, those unnecessary typings are all gone and you can directly define your anonymous class as:
+                </p>
+
+                    <ccode>
+
+                    </ccode>
+
+                <p>
+                    It's a indeed a life-saver! The parenthesis signifies that we are overriding the abstract function in the interface and we can pass in parameters as before (more on this later). The arrow is quite straightforward in showing where the function is actually defined.
+                </p>
+                <p>
+                    Same as all things, convenience requires more work. To use lambda expressions, there is a major constraint, namely the overrided method must be the only abstract method in the interface we wish to implement. We call such an interface as a <b>functional interface</b>.
+                </p>
+
+                <ccode>
+
+                </ccode>
+                <p>
+                    The reason behind, as I understand is quite simple. Since we don't have the traditional framework of defining anonymous class, there's no way for one lambda expression to implement several abstract methods at the same time. To avoid making such mistakes, it's good practice to annotate a functional interface with <icode>@FunctionalInterface</icode> on top of the signature.
+                </p>
+
+                <h2>Java Stream</h2>
+                <p>Now let's switch to talk about Java Stream, which extensively use lambda expressions.</p>
+                <p>
+                    To start with, the name of Stream is pretty explainatory. It's a stream of actions, a sequence of doing things or a pipeline. It's especially useful when analyzing or manipulating collections of data.
+                </p>
+                <p>Before we move on to some examples, we have to understand two things first:</p>
+                <h3>1. Intermediate &amp; Terminal Operations</h3>
+                <p>
+                    An intermediate operation is used to manipulate data in certain ways and return the result back. For example, we may want to pick data only data with value greater than 100, get the id of each employee or sort ages in increasing order.<br>
+                    A terminal operation is used to summarize the data or package and ship the processed data. For example, we may want to find the sum or average of a list of numbers or to create a map between employee id and employee salary from a list of employee objects.
+                </p>
+                <h3>2. Predicates, Consumers and Suppliers</h3>
+                <p>
+
+                </p>
+
+                <h3>Useful References:</h3>
+                <p>
+                    <a href='https://www.leveluplunch.com/java/examples/stream-intermediate-operations-example/'>Stream Intermediate Operations</a>
+                </p>
+            </div>
+        </div>
+
+        <!-- Contact Section -->
+        <div id='contact-root'>
+            <p>Contact at: harrynjc@gmail.com</p>
+            <a href="https://github.com/Hackerry"><i class="fab fa-github"></i></a>
+        </div>
+    </body>
+</html>
