@@ -22,4 +22,5 @@
 #content > h2{padding:20px 0 5px 0;line-height: 3em;}
 #content > h3{padding:5px 0;line-height: 3em;}
 #content > ol {display: block;padding-left: 50px;}
+icode {color:#a20b00;padding:5px;border-radius:5px;font-family:monospace,monospace;}
 #content-date{padding-bottom: 20px;}
