@@ -1,6 +1,7 @@
 *{margin:0;padding:0;font-family:sans-serif;}
 * > a {text-decoration:none;color:white}
 *::selection {background-color:#424242;color:white}
+pre {display: inline;padding:1px 0px 1px 10px;font-family:monospace,monospace;}
 
 #nav-bar{position:-webkit-sticky;position:sticky;top:0px;width:100%;height:60px;background-color:#1c1e33;display:inline-block;color:white;z-index:100;}
 #nav-bar > a{display:inline-block;width:150px;font-size:1.5em;color:white;font-weight:normal;line-height:60px;text-align:left;padding-left:30px;text-decoration:none;}
@@ -22,5 +23,10 @@
 #content > h2{padding:20px 0 5px 0;line-height: 3em;}
 #content > h3{padding:5px 0;line-height: 3em;}
 #content > ol {display: block;padding-left: 50px;}
+.ccode {display:block;list-style:none;padding:0;counter-reset:linenum;font-size:0.6em;}
+.ccode > li {line-height:1.7em;}
+.ccode > li:nth-child(odd) {background: darkgrey;}
+.ccode > li:nth-child(even) {background: lightgrey;}
+.ccode > li::before {counter-increment:linenum; content:counter(linenum);display:inline-block;background-color: white;text-align:center;width:25px;}
 icode {color:#a20b00;padding:5px;border-radius:5px;font-family:monospace,monospace;}
 #content-date{padding-bottom: 20px;}
