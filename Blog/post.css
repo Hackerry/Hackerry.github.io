@@ -23,10 +23,10 @@ pre {display: inline;padding:1px 0px 1px 10px;font-family:monospace,monospace;}
 #content > h2{padding:20px 0 5px 0;line-height: 3em;}
 #content > h3{padding:5px 0;line-height: 3em;}
 #content > ol {display: block;padding-left: 50px;}
-.ccode {display:block;list-style:none;padding:0;counter-reset:linenum;font-size:0.6em;}
+.ccode {display:block;list-style:none;padding:0;counter-reset:linenum;font-size:0.8em;margin:20px 0;}
 .ccode > li {line-height:1.7em;}
-.ccode > li:nth-child(odd) {background: darkgrey;}
-.ccode > li:nth-child(even) {background: lightgrey;}
-.ccode > li::before {counter-increment:linenum; content:counter(linenum);display:inline-block;background-color: white;text-align:center;width:25px;}
+.ccode > li:nth-child(odd) {background: #c1c0c0;}
+.ccode > li:nth-child(even) {background: #e4e3e3;}
+.ccode > li::before {counter-increment:linenum; content:counter(linenum);display:inline-block;background-color:#585858;text-align:center;width:25px;color:lightgrey;}
 icode {color:#a20b00;padding:5px;border-radius:5px;font-family:monospace,monospace;}
 #content-date{padding-bottom: 20px;}
