@@ -1,0 +1,184 @@
+<html>
+    <head>
+        <link rel='stylesheet' href='post.css'></link>
+        <script src="https://kit.fontawesome.com/c9acfba105.js" crossorigin="anonymous"></script>
+        <script type='text/javascript'>
+            function gotop() {
+                document.body.scrollTop = 0;
+                document.documentElement.scrollTop = 0;
+            }
+        </script>
+    </head>
+
+    <body>
+        <!-- Navigation section -->
+        <nav id='nav-bar'>
+            <a href='../'>Jiachen Niu</a>
+            <ul id='nav-link'>
+                <li><a href='../#banner'>Home</a></li>
+                <li><a href='../#project-root'>Projects</a></li>
+                <li><a href='../Blog/Blog_Main.html'>Blog</a></li>
+                <li><a href='../#contact-root'>Contact</a></li>
+            </ul>
+        </nav>
+
+        <!-- Go top icon -->
+        <div id='top-icon' onclick='gotop()'>
+            <p>Go Top</p>
+            <i class="fas fa-arrow-up"></i>
+        </div>
+
+        <!-- Content section -->
+        <div id='content-wrapper'>
+            <div id='content' style='width:750px;'>
+                <h1>Java Stream and Lambda Expressions</h1>
+                <p id='content-date'>Feb. 26, 2020, 00:30:14</p>
+                <p>
+                    Welcome back! It's almost a month since my last post. I've been quite busy the past few weeks working on my philosophy paper and several midterms. Finally, I can take a break from my coursework and find some interesting things to learn.
+                </p>
+                <p>
+                    <b>Java Stream &amp; Lambda Expressions</b> - two new features introduced in Java 8 which I'm not totally sure whether I really know them or not - look like a good starting point for me.
+                </p>
+                <p>
+                    <b>Disclaimer:</b> This is only a study note, not a techincal article. If you find errors in this note, please post them as Issues.
+                </p>
+
+                <h2>Lambda Expressions</h2>
+                <p>
+                    I've used lambda expressions before in my JavaFX projects, mainly to save some time typing anonymous event listeners. Now after I learned more on the subject, I find my initial feeling is quite accurate in defining the use of lambda expressions - <b>to save time</b>.
+                </p>
+                <p>Let's take comparators for example. Previously if we want to customize a comparator in Java, you would take one of the following ways:</p>
+                <p>
+                    <ol>
+                        <li>Define a new comparator class that implements <icode>Comparator&lt;T&gt;</icode> and overrides the <icode>compare()</icode> method (good for reuse)</li>
+                        <li>Define an anonymous <icode>Comparator&lt;T&gt;</icode> class and overrides the <icode>compare()</icode> method (good for single use)</li>
+                    </ol>
+                </p>
+                <p>In both cases, we would type a lot of words before defining the actual <icode>compare()</icode> method.</p>
+
+                <ul class='ccode'>
+                    <li><pre>public class Example {</pre></li>
+                    <li><pre>    public static void main(String[] args) {</pre></li>
+                    <li><pre>        ArrayList&lt;Integer&gt; nums = new ArrayList&lt;&gt;(Arrays.asList(1,2,3,4,10,9,8,7,5,6));</pre></li>
+                    <li><pre>        </pre></li>
+                    <li><pre>        // Method 1: Instantiate Comparator class</pre></li>
+                    <li><pre>        Collections.sort(nums, new MyComparator());</pre></li>
+                    <li><pre>        System.out.println(nums);  //[1,3,5,7,9,2,4,6,8,10]</pre></li>
+                    <li><pre></pre></li>
+                    <li><pre>        // Method 2: Anonymous Comparator class</pre></li>
+                    <li><pre>        Collections.sort(nums, new Comparator&lt;Integer&gt;() {</pre></li>
+                    <li><pre>            @Override</pre></li>
+                    <li><pre>            public int compare(Integer i1, Integer i2) {</pre></li>
+                    <li><pre>                return i1 % 2 == 0 ? (i2 % 2 == 0 ? i1-i2: 1): (i2 % 2 == 0 ? -1: i1-i2);</pre></li>
+                    <li><pre>            }</pre></li>
+                    <li><pre>        });</pre></li>
+                    <li><pre>        System.out.println(nums);  //[1,3,5,7,9,2,4,6,8,10]</pre></li>
+                    <li><pre>    }</pre></li>
+                    <li><pre>}</pre></li>
+                    <li><pre></pre></li>
+                    <li><pre>class MyComparator implements Comparator&lt;Integer&gt; {</pre></li>
+                    <li><pre>    @Override</pre></li>
+                    <li><pre>    public int compare(Integer i1, Integer i2) {</pre></li>
+                    <li><pre>        return i1 % 2 == 0 ? (i2 % 2 == 0 ? i1-i2: 1): (i2 % 2 == 0 ? -1: i1-i2);</pre></li>
+                    <li><pre>    }</pre></li>
+                    <li><pre>}</pre></li>
+                </ul>
+
+                <p>
+                    Now with lambda expressions, those unnecessary typings are all gone. We can define our anonymous class as:
+                </p>
+
+                <ul class='ccode'>
+                    <li><pre>// Method 3: Lambda Expression</pre></li>
+                    <li><pre>Collections.sort(nums, (a,b) -&gt; a % 2 == 0 ? (b % 2 == 0 ? a-b: 1): (b % 2 == 0 ? -1: a-b));</pre></li>
+                    <li><pre>System.out.println(nums);  //[1,3,5,7,9,2,4,6,8,10]</pre></li>
+                </ul>
+
+                <p>
+                    It's indeed a lifesaver! The parenthesis shows that we are overriding the abstract function in the interface. We can also pass in parameters as before. The arrow is quite straightforward in showing how the function is defined. In short terms, lambda expression let us override methods without the class framework.
+                </p>
+                <p>
+                    As expected, there are some inconvenience associated with this convenience. To use lambda expressions, there is a major constraint, namely the overrided method must be the only abstract method in the interface we wish to implement. We call such an interface a <b>functional interface</b>.
+                </p>
+                <p>
+                    The reason behind, as I understand is quite simple. Since we don't have the traditional framework for defining anonymous class, there's no way for one lambda expression to implement several abstract methods at the same time. To avoid making mistakes, it's good practice to annotate a functional interface with <icode>@FunctionalInterface</icode> on top of the signature.
+                </p>
+
+                <h2>Java Stream</h2>
+                <p>Now let's switch to talk about Java Stream, which works closely with lambda expressions in improving code readibilities.</p>
+                <p>
+                    The name of Stream is pretty explainatory. It's a stream of actions performed on an object and it's especially useful when analyzing or manipulating data.
+                </p>
+                <p>Before moving on to examples, we should first understand two concepts:</p>
+                <h3>1. Intermediate &amp; Terminal Operations</h3>
+                <p>
+                    An intermediate operation is used to manipulate data in certain ways and return the result back. For example, we may want to pick data only data with value greater than 100, get the id of each employee or sort ages in increasing order. <icode>filter()</icode> and <icode>map()</icode> are examples of intermediate operations.<br>
+                    A terminal operation is often used to summarize data or pack processed data to a container. For example, we may want to find the sum or average of a list of numbers or to create a map between employee id and employee salary from a list of employees. <icode>collect()</icode> and <icode>count()</icode> are examples of terminal operations.
+                </p>
+                <h3>2. Predicates, Consumers, Functions and Suppliers</h3>
+                <p>
+                    These functional interfaces are also introduced in Java 8 and they facilitate the use of lambda expressions in streams (as we shall see later).<br>
+                    A Predicate provides <icode>boolean test(T t)</icode> method for testing certain properties of an object.<br>
+                    A Consumer provides <icode>void accept(T t)</icode> method for performing actions on an object.<br>
+                    A Function provides <icode>R apply(T t)</icode> method for manipulating an object and returning the result.<br>
+                    A Supplier provides <icode>T get()</icode> method for feeding data into the stream.<br>
+                </p>
+                <p>
+                    Now with these two concepts ready, we can dive into some examples. The first example shows how to calculate the average of a list of integers with stream.
+                </p>
+                <ul class='ccode'>
+                    <li><pre>ArrayList&lt;Integer&gt; ages = new ArrayList&lt;&gt;(Arrays.asList(21,25,40,60,54,12,23,30,29,48));</pre></li>
+                    <li><pre>double averageAge = ages.stream().mapToInt(Integer::intValue).average().getAsDouble();</pre></li>
+                    <li><pre>System.out.println(averageAge);    //34.2</pre></li>
+                </ul>
+                <p>
+                    First, we get the stream by calling <icode>stream()</icode> function on the <icode>ArrayList</icode>. Then we specifically convert a stream of integers into an <icode>IntStream</icode> through the map function. With an <icode>IntStream</icode>, we can easily calculate the average and return the result as a double.
+                </p>
+
+                <ul class='ccode'>
+                    <li><pre>Map&lt;Character, String&gt; initialMap = Arrays.stream(new String[] {</pre></li>
+                    <li><pre>    "Harry", "Jelly", "Alice", "Bob", "Leonardo DiCaprio"</pre></li>
+                    <li><pre>}).filter((s) -&gt; !s.contains(" ")).collect(Collectors.toMap((s) -&gt; s.charAt(0), (s) -&gt; s));</pre></li>
+                    <li><pre>System.out.println(initialMap);    //{A=Alice, B=Bob, H=Harry, J=Jelly}</pre></li>
+                </ul>
+                <p>
+                    This example introduces two more common functions used in stream: <icode>filter()</icode> and <icode>collect()</icode>. <icode>filter()</icode> is used to select only those elements that satisify a certain condition. Here we use a Predicate as the condition checker, and we implement it with a lambda expression (remeber what we talked about before?). <icode>collect()</icode> is used to pack data to a container. In this case, we pack our data into a map and use two functions to specify how to generate the key and value pair in the map.
+                </p>
+
+                <p>
+                    Finally, let's look at a special use of <icode>collect()</icode>. (This example is adopted from stream package summary. See reference below.)
+                </p>
+
+                <ul class='ccode'>
+                    <li><pre>String alphabet = "qwertyuiopasdfghjklzxcvbnm";</pre></li>
+                    <li><pre>StringBuilder stringBuilder = Arrays.stream((alphabet.split(""))).sorted()</pre></li>
+                    <li><pre>    .collect(() -&gt; new StringBuilder(), </pre></li>
+                    <li><pre>            (sb,s) -&gt; sb.append(s), </pre></li>
+                    <li><pre>            (sb1, sb2) -&gt; sb1.append(sb2.toString()));</pre></li>
+                    <li><pre>System.out.println(stringBuilder.toString());  //abcdefghijklmnopqrstuvwxyz</pre></li>
+                </ul>
+
+                <p>
+                    In this case, <icode>collect()</icode> requires 3 arguments and, instead of packing data to a collection, it packs processed data into a <icode>StringBuilder</icode>. The first argument is a <b>supplier</b>, which returns a new <icode>StringBuilder</icode> as a container for strings. Then for each string, it is appended to that <icode>StringBuilder</icode> by an <b>accumulator</b> as defined by the second argument. Finally, to combine two <icode>StringBuilder</icode>s, we need to define a <b>combiner</b> that concatenate them together, as defined by the last argument. This way of packing data is called <b>mutable reduction</b>, because all data is added to a single mutable container (in this case a <icode>StringBuilder</icode>).
+                </p>
+
+                <h2>Conclusion</h2>
+                <p>
+                    Using Streams and Lambda Expressions can greatly save programmers time typing. They are also concise and easier to understand. Overall, they are handy tools to have in one's toolkit.
+                </p>
+
+                <h3>Useful Links/References:</h3>
+                <p>
+                    <a href='https://www.leveluplunch.com/java/examples/stream-intermediate-operations-example/'>Stream Intermediate Operations</a><br>
+                    <a href='https://docs.oracle.com/javase/8/docs/api/java/util/stream/package-summary.html'>Stream Package Summary</a>
+                </p>
+            </div>
+        </div>
+
+        <!-- Contact Section -->
+        <div id='contact-root'>
+            <p>Contact at: harrynjc@gmail.com</p>
+            <a href="https://github.com/Hackerry"><i class="fab fa-github"></i></a>
+        </div>
+    </body>
+</html>
