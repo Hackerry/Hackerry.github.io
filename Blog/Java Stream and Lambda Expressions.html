@@ -98,7 +98,7 @@
                     It's indeed a lifesaver! The parenthesis shows that we are overriding the abstract function in the interface. We can also pass in parameters as before. The arrow is quite straightforward in showing how the function is defined. In short terms, lambda expression let us override methods without the class framework.
                 </p>
                 <p>
-                    As expected, there are some inconvenience associated with this convenience. To use lambda expressions, there is a major constraint, namely the overrided method must be the only abstract method in the interface we wish to implement. We call such an interface a <b>functional interface</b>.
+                    As expected, there are some inconvenience associated with this convenience. To use lambda expressions, there is a major constraint, namely the overriden method must be the only abstract method in the interface we wish to implement. We call such an interface a <b>functional interface</b>.
                 </p>
                 <p>
                     The reason behind, as I understand is quite simple. Since we don't have the traditional framework for defining anonymous class, there's no way for one lambda expression to implement several abstract methods at the same time. To avoid making mistakes, it's good practice to annotate a functional interface with <icode>@FunctionalInterface</icode> on top of the signature.
