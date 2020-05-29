@@ -32,25 +32,39 @@
         <!-- List of blogs section -->
         <div id='content-wrapper'>
             <div id='content'>
-                <h1>Blog Posts</h1>
-                <ul id='blog-list'>
-                    <!-- Populate Entries here TODO automate the process -->
-                    <li class='entry'>
-                        <a href='My Way Into CS.html'>My Way Into CS</a>
-                        <p class='post-date'>Apr. 19, 2020</p>
-                        <p class='post-overview'>Several years ago, I would never imagine myself in the world of computer science...</p>
-                    </li>
-                    <li class='entry'>
-                        <a href='Java Stream and Lambda Expressions.html'>Java Stream & Lambda Expressions</a>
-                        <p class='post-date'>Feb. 26, 2020</p>
-                        <p class='post-overview'>Welcome back! It's almost a month since my last post. I've been quite busy the past few weeks working on ...</p>
-                    </li>
-                    <li class='entry'>
-                        <a href='2020, A New Start.html'>2020, A New Start</a>
-                        <p class='post-date'>Jan. 31, 2020</p>
-                        <p class='post-overview'>It's the last day of January 2020 and the past month has been full of events and emotions...</p>
-                    </li>
-                </ul>
+                <div id='blog-list-wrapper'>
+                    <h1>Blog Posts</h1>
+                    <ul id='blog-list'>
+                        <!-- Populate Entries here TODO automate the process -->
+                        <li class='entry study-notes'>
+                            <a href="Banker's Algorithm.html">Bankers Algorithm</a>
+                            <p class='post-date'>May. 28, 2020</p>
+                            <p class='post-overview'>Hi, there! Today I want to talk about the Banker's algorithm...</p>
+                        </li>
+                        <li class='entry thoughts'>
+                            <a href='My Way Into CS.html'>My Way Into CS</a>
+                            <p class='post-date'>Apr. 19, 2020</p>
+                            <p class='post-overview'>Several years ago, I would never imagine myself in the world of computer science...</p>
+                        </li>
+                        <li class='entry study-notes'>
+                            <a href='Java Stream and Lambda Expressions.html'>Java Stream & Lambda Expressions</a>
+                            <p class='post-date'>Feb. 26, 2020</p>
+                            <p class='post-overview'>Welcome back! It's almost a month since my last post. I've been quite busy the past few weeks working on ...</p>
+                        </li>
+                        <li class='entry thoughts'>
+                            <a href='2020, A New Start.html'>2020, A New Start</a>
+                            <p class='post-date'>Jan. 31, 2020</p>
+                            <p class='post-overview'>It's the last day of January 2020 and the past month has been full of events and emotions...</p>
+                        </li>
+                    </ul>
+                </div>
+                <div id='tag-list-wrapper'>
+                    <ul id='tag-list'>
+                        <li id='study-notes'>Study Notes&nbsp;<span id='study-notes'></span></li>
+                        <li id='thoughts'>Thoughts&nbsp;<span id='thoughts'></span></li>
+                        <li id='all'>All&nbsp;<span id='all'></span></li>
+                    </ul>
+                </div>
             </div>
         </div>
 
@@ -59,5 +73,36 @@
             <p>Contact at: harrynjc@gmail.com</p>
             <a href="https://github.com/Hackerry"><i class="fab fa-github"></i></a>
         </div>
+
+        <script>
+            var tagList = document.getElementById('tag-list');
+            var postList = document.getElementById('blog-list');
+
+            for(var l of tagList.children) {
+                var id = l.id;
+                var count = 0;
+                if(id == 'all') count = postList.children.length;
+                else {
+                    for(var t of postList.children) {
+                        if(t.classList.contains(id)) count++;
+                    }
+                }
+                l.children[0].innerHTML = count;
+            }
+            tagList.onclick = function(e) {
+                // console.log("Click " + e.target.id);
+                var id = e.target.id;
+                if(id === 'all') {
+                    for(var l of postList.children) {
+                        l.style.display = 'block';
+                    }
+                } else {
+                    for(var l of postList.children) {
+                        if(l.classList.contains(id)) l.style.display = 'block';
+                        else l.style.display = 'none';
+                    }
+                }
+            }
+        </script>
     </body>
 </html>
