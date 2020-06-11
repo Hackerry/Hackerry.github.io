@@ -34,11 +34,11 @@
                 <h1>Experimenting with ARP Poisoning Attack</h1>
                 <p id='content-date'>Jun. 3, 2020, 00:32:04</p>
                 <p>
-                    I don't mean to update so soon after the previous post, but I finished my project a little bit early (thanks to my hard work two weeks ago). So I decided to use this free afternoon doing some related side-project to keep myself busy.
+                    I don't mean to update so soon after the previous post, but since I finished my CS class project a little bit early (thanks to my hard work two weeks ago), I decided to use this free afternoon doing some related side-project to keep myself busy.
                 </p>
 
                 <p>
-                    The project I finished early was about router design. Consequently, I think it's more than fitting to try the ARP Poisoning Attack I once heard about. I didn't dare to try it out before because I'm afraid of messing up our home router or unadvertently sniffing on my roomate's laptop (ethical hacking in mind). Now I've learned a lot from my computer network class. I feel confident in my ability to keep things secure and under control. So here we go.
+                    The project I finished early was about router design. Consequently, I think it's more than fitting to try the ARP Poisoning Attack I once heard about to test my knowledge. I didn't dare to try it out before because I'm afraid of messing up our home router or unadvertently sniffing on my roomate's laptop (ethical hacking in mind). Now I've learned a lot from my computer network class. I feel confident in my ability to keep things secure and under control. So here we go.
                 </p>
 
                 <h2>Concept</h2>
@@ -135,12 +135,12 @@
                 </div>
 
                 <p>
-                    <b>Important Note:</b> For reasons discussed later, we will make the Raspberry Pi both the web server and the router. The traffic between client and server still holds, only that we cut short the step from the router to the webserver.
+                    <b>Important Note:</b> For reasons discussed later, we will make the Raspberry Pi both the web server and the router.
                 </p>
 
                 <h2>Experiment</h2>
                 <p>
-                    After following the procedure afore mentioned, our <icode>arpspoof</icode> program started sending ARP packets to both the victim and the router successfully. Now we open Wireshark and started the login process on the victim machine (Figure 4). Then we submit and get back our greeting message (Figure 5).
+                    After following the procedure afore mentioned, our <icode>arpspoof</icode> program starts sending ARP packets to both the victim and the router. Now we start capturing packets on Wireshark and login on the victim machine (Figure 4). Then we submit and get back our greeting message (Figure 5).
                 </p>
 
                 <div style="text-align: center;">
@@ -154,7 +154,7 @@
                 </div>
 
                 <p>
-                    At the meantime, our snooper has successfully captured packets coming and going from our victim host. The packets of interests here are the HTTP GET and POST request made from the host. These contain information the victim hosts send to the server. If that information is not properly encrypted, in this case it doesn't, then all secrets are visible to the snooper.
+                    At the meantime, our snooper has successfully captured packets coming and going from our victim host. The packets of interests here are the HTTP GET and POST requests. These contain information the victim hosts send to the server. If such information is not properly encrypted, in this case it doesn't, then all secrets are visible to the snooper.
                 </p>
 
                 <div style="text-align: center;">
@@ -174,14 +174,14 @@
                     As you've seen this is just a toy application and there are many addtional efforts in making this example work.
                 </p>
                 <p>
-                    To start with, I made my webserver the poisoned router instead of my actual router because in this example the webpage I want to access is within my network. This means the traffic never goes to my router. Instead, the traffic directly goes to my Raspberry Pi through the LAN hub. This doesn't make my experiment invalid because we successfully injected our snooper within the traffic flow, which shouldn't be there.
+                    To start with, my Raspberry Pi is both the webserver and the router being poisoned. Since my Raspberry Pi is on my local network, so our requests never leave the router. To help understanding, we can asssume our Pi is the router to another subnet within our network and the webserver resides on one of the hosts in the subnet, only that host is the Pi itself. This doesn't make my experiment invalid because we successfully injected our snooper in the traffic flow.
                 </p>
 
                 <p>
-                    In addition, I purposefully did no encryption on the data transfer. In real world, almost all data is encrypted over the network. There are also many other ways to protect transferred data that is pretty much standard nowadays. For example, did you notice the "Not Secure" mark in the example and on many not-well maintained webpages you've probably visited? This is Chrome telling you that the website is using HTTP protocol instead of HTTPS. The addtional 'S' stands for secure (connection). HTTPS is pretty much today's standard for enterprise-level websites and it encrypts data as well as doing many other security checks (for more information, see <a href='https://www.youtube.com/watch?v=-enHfpHMBo4'>here</a>). On a lower-level, routers are becoming more sophisticated and robust against malicious attacks. Many routers even have the capability to stop ARP Poisoning (see <a href='https://security.stackexchange.com/questions/34142/is-it-possible-that-my-home-router-is-preventing-my-arp-poisoning-attack'>here</a>).
+                    In addition, I purposefully did no encryption when transffering data. In real world, almost all data is encrypted over the network. There are also many other ways to protect transferred data that is pretty much standard nowadays. For example, did you notice the "Not Secure" mark in the example and on many not-well maintained webpages you've probably visited? This is Chrome telling you that the website is using HTTP protocol instead of HTTPS. The addtional 'S' stands for secure (connection). HTTPS is pretty much today's standard for enterprise-level websites and it encrypts data as well as doing many other security checks (for more information, see <a href='https://www.youtube.com/watch?v=-enHfpHMBo4'>here</a>). On a lower-level, routers are becoming more sophisticated and robust against malicious attacks. Many routers even have the capability to stop ARP Poisoning (see <a href='https://security.stackexchange.com/questions/34142/is-it-possible-that-my-home-router-is-preventing-my-arp-poisoning-attack'>here</a>).
                 </p>
                 <p>
-                    So overall, this is a successful side-project. I really learned a lot about protocols and router designs when I was doing this project. Of course, I had many failures (ie. spoof on a virtual machine that is on a different subnet or between hosts connected to Wi-Fi and ethernet), but I find them more rewarding than straightup success following a tutorial video.
+                    So overall, this is a successful side-project. I really learned a lot about network protocols and router design from this project. Of course, I had many failed attempts (ie. spoof on a virtual machine that is on a different subnet, or between hosts that are connected via Wi-Fi and ethernet), but I find them more rewarding than straightup success.
                 </p>
 
                 <h3>Useful Links/References:</h3>
