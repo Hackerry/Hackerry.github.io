@@ -1,10 +1,12 @@
-#content {width:700px;}
+#content {width:700px;height:100%;}
 #blog-list {text-decoration:none;list-style:none;margin-top:50px;float:left;}
 #blog-list-wrapper {width:75%;}
-#blog-list-wrapper > h1 {font-size:2.3em;border-bottom:2px solid #636363;line-height:3em;}
+#category-title {font-size:2.3em;line-height:2em;}
+#category-desc {padding-left:5px;border-bottom:2px solid #636363;font-weight:normal;font-size:1em;padding-bottom:10px;}
 #tag-list-wrapper {width:20%;float:left;margin-left:5%;box-sizing:border-box;}
 #tag-list {list-style:none;padding-left:2px;font-weight:bold;padding:5px;}
 #tag-list > li {text-align: right;}
+#tag-list > li > span {pointer-events:none;}
 #tag-list:hover {cursor:hand;}
 #contact-root {clear: both;}
 .entry {margin-bottom:30px;padding-bottom:20px;}

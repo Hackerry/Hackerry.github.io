@@ -33,7 +33,8 @@
         <div id='content-wrapper'>
             <div id='content'>
                 <div id='blog-list-wrapper'>
-                    <h1>Blog Posts</h1>
+                    <h1 id='category-title'>Blog Posts</h1>
+                    <h2 id='category-desc'>All blog posts</h2>
                     <ul id='blog-list'>
                         <!-- Populate Entries here TODO automate the process -->
                         <li class='entry study-notes'>
@@ -65,9 +66,9 @@
                 </div>
                 <div id='tag-list-wrapper'>
                     <ul id='tag-list'>
-                        <li id='study-notes'>Study Notes&nbsp;<span id='study-notes'></span></li>
-                        <li id='thoughts'>Thoughts&nbsp;<span id='thoughts'></span></li>
-                        <li id='all'>All&nbsp;<span id='all'></span></li>
+                        <li id='study-notes'>Study Notes&nbsp;-&nbsp;<span id='study-notes'></span></li>
+                        <li id='thoughts'>Thoughts&nbsp;-&nbsp;<span id='thoughts'></span></li>
+                        <li id='all'>All&nbsp;-&nbsp;<span id='all'></span></li>
                     </ul>
                 </div>
             </div>
@@ -82,6 +83,8 @@
         <script>
             var tagList = document.getElementById('tag-list');
             var postList = document.getElementById('blog-list');
+            var category_title = document.getElementById('category-title');
+            var category_desc = document.getElementById('category-desc');
 
             for(var l of tagList.children) {
                 var id = l.id;
@@ -94,6 +97,8 @@
                 }
                 l.children[0].innerHTML = count;
             }
+
+            // Switch category
             tagList.onclick = function(e) {
                 // console.log("Click " + e.target.id);
                 var id = e.target.id;
@@ -101,10 +106,22 @@
                     for(var l of postList.children) {
                         l.style.display = 'block';
                     }
+                    category_title.innerHTML = 'Blog Posts';
+                    category_desc.innerHTML = 'All blog posts';
                 } else {
                     for(var l of postList.children) {
                         if(l.classList.contains(id)) l.style.display = 'block';
                         else l.style.display = 'none';
+                    }
+                    switch(id) {
+                        case 'thoughts':
+                            category_title.innerHTML = 'Thoughts';
+                            category_desc.innerHTML = 'The best way to test the validity of one\'s thought is by putting it into words';
+                            break;
+                        case 'study-notes':
+                            category_title.innerHTML = 'Study Notes';
+                            category_desc.innerHTML = '\"Live and learn\"';
+                            break;
                     }
                 }
             }
