@@ -20,7 +20,7 @@ thead {border-bottom: 1px solid #636363;}
 #contact-root > p {font-size: 20px;line-height: 30px;padding-top: 35px;}
 #contact-root > a > i {display: inline-block;width: 50px;font-size: 1.8em;margin: 30px 0px 0px 0px;}
 
-#content-wrapper{background-color: #f3efe0;min-height:150%;line-height:2.3em;padding-bottom: 150px;}
+#content-wrapper{background-color: #f3efe0;overflow:auto;line-height:2.3em;padding-bottom: 150px;}
 #content {width:650px;margin:0 auto;padding-top:50px;color:#636363;}
 #blog-list-wrapper {display:block;}
 #content > p {font-size:1.2em;}
