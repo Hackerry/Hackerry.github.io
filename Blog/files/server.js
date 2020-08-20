@@ -42,7 +42,7 @@ const requestListener = function(req, res) {
     req.on('end', () => {
       var params = body.split('&');
       var html = greet.replace('PLACEHOLDER', params[0].substr(params[0].indexOf('=')+1));
-      res.write(html);
+      res.end(html);
     });
   }
 }
