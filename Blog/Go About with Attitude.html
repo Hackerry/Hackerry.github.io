@@ -1,0 +1,181 @@
+<html>
+    <head>
+        <link rel='stylesheet' href='post.css'></link>
+        <script src="https://kit.fontawesome.com/c9acfba105.js" crossorigin="anonymous"></script>
+        <script type='text/javascript'>
+            function gotop() {
+                document.body.scrollTop = 0;
+                document.documentElement.scrollTop = 0;
+            }
+        </script>
+    </head>
+
+    <body>
+        <!-- Navigation section -->
+        <nav id='nav-bar'>
+            <a href='../'>Jiachen Niu</a>
+            <ul id='nav-link'>
+                <li><a href='../#banner'>Home</a></li>
+                <li><a href='../#project-root'>Projects</a></li>
+                <li><a href='../Blog/Blog_Main.html'>Blog</a></li>
+                <li><a href='../#contact-root'>Contact</a></li>
+            </ul>
+        </nav>
+
+        <!-- Go top icon -->
+        <div id='top-icon' onclick='gotop()'>
+            <p>Go Top</p>
+            <i class="fas fa-arrow-up"></i>
+        </div>
+
+        <!-- Content section -->
+        <div id='content-wrapper'>
+            <div id='content' style='width:750px;'>
+                <h1>GO About with Attitude</h1>
+                <p id='content-date'>Aug. 19, 2020, 23:19:45</p>
+
+                <p>
+                    Let's just start with the code this time:
+                </p>
+
+                <ul class='ccode'>
+                    <li><pre>package main</pre></li>
+                    <li><pre></pre></li>
+                    <li><pre>import (</pre></li>
+                    <li><pre>       "fmt"</pre></li>
+                    <li><pre>       "strconv"</pre></li>
+                    <li><pre>       "strings"</pre></li>
+                    <li><pre>)</pre></li>
+                    <li><pre></pre></li>
+                    <li><pre>var operations = map[string]string {</pre></li>
+                    <li><pre>       "add 1": "+1",</pre></li>
+                    <li><pre>       "add 2": "+2",</pre></li>
+                    <li><pre>       "add 10": "+10",</pre></li>
+                    <li><pre>       "time 1": "*1",</pre></li>
+                    <li><pre>       "time 2": "*2",</pre></li>
+                    <li><pre>       "time 5": "*5",</pre></li>
+                    <li><pre>}</pre></li>
+                    <li><pre></pre></li>
+                    <li><pre>func main() {</pre></li>
+                    <li><pre>       for i := 0; i &lt; 5; i++ {</pre></li>
+                    <li><pre>               calculate()</pre></li>
+                    <li><pre>       }</pre></li>
+                    <li><pre>}</pre></li>
+                    <li><pre></pre></li>
+                    <li><pre>func calculate() {</pre></li>
+                    <li><pre>       value := 1</pre></li>
+                    <li><pre>       var newValue int</pre></li>
+                    <li><pre></pre></li>
+                    <li><pre>       for _, v := range operations {</pre></li>
+                    <li><pre>               newValue = doOperation(value, v)</pre></li>
+                    <li><pre>               fmt.Printf("%d%s - %d", value, v, newValue)</pre></li>
+                    <li><pre>               value = newValue</pre></li>
+                    <li><pre>       }</pre></li>
+                    <li><pre>       fmt.Printf("Final result: %d", value)</pre></li>
+                    <li><pre>}</pre></li>
+                    <li><pre></pre></li>
+                    <li><pre>func doOperation(value int, operation string) int {</pre></li>
+                    <li><pre>       if strings.HasPrefix(operation, "+") {</pre></li>
+                    <li><pre>               i, _ := strconv.Atoi(operation[1:])</pre></li>
+                    <li><pre>               value += i</pre></li>
+                    <li><pre>       } else if strings.HasPrefix(operation, "*") {</pre></li>
+                    <li><pre>               i, _ := strconv.Atoi(operation[1:])</pre></li>
+                    <li><pre>               value *= i</pre></li>
+                    <li><pre>       }</pre></li>
+                    <li><pre>       return value</pre></li>
+                    <li><pre>}</pre></li>
+                    <li><pre></pre></li>
+                </ul>
+
+                <p>
+                    It's doing a straightforward job, apply each operation in <icode>operations</icode> to the initial value 1 and output the final result. The process is just like this: <icode>(1+1+2+10)*1*2*5=140</icode>
+                </p>
+
+                <p>
+                    Now if I want to decide what the final result will be, I will have to decide the order of each entry being retrieved from the map.
+                </p>
+
+                <h2>Review HashMap</h2>
+                <p>
+                    There are many thoughts here. The looping order may be the same as the insertion order, as is implemented in the Javascript Map object. It can also take the natural ordering of the keys as in the case of Java TreeMap. Or there may not be an obvious ordering at all as in Java HashMap, but that specific order in the first run will not change in future runs given that the map structure doesn't change with adding/deleting keys. This outcome is in accordance with Java's "Write once, run anywhere" ideology - to make runtime behavior predictable and exact given the same set of code.
+                </p>
+                <p>
+                    Also, Java's Hashmap implementation conforms quite well to how hashmap works theoretically. As a review from my data structure class, an ideal hashmap ensures constant lookup time of values by associate each value with a unique hash key, generated by a hash function. Then based on the hash key, values are put into corresponding slots/bins for future lookups. In case of a lookup, the same deterministic hash key is generated again using the function and previously stored value is retrieved from the bin.
+                </p>
+                <p>
+                    The ratio between the number of bins that have been taken up and the total number of bins allocated is called "load factor". As demonstrated by the famous <a href="https://en.wikipedia.org/wiki/Birthday_problem">Birthday problem</a>, around 60% full is where collisions will significantly impact the performance of lookups by having too many values assigned to the same bin, resulting in a worst case linear <icode>O(n)</icode> runtime search. Therefore, real life hashmap implementations will scale up and down based on the load factor to balance space and efficiency. This operation involves allocating a bigger hashmap, recalculating the new hash keys for existing values and copy them over. Because of this scaling, the looping order of Hashmap in Java may change between runs given that a scaling happens, but otherwise, the looping order is absolutely the same between runs since the exact same code is run on the exact same hashmap structure with the exact same set of values.
+                </p>
+
+                <h2>GO's Map Implementation</h2>
+                <p>
+                    As I'm very familiar with Java's HashMap implementation, I was very confused about GO's randomized hashmap iterating behavior, as a GO newbie, when I first read about it. I came to know this pecularity when I encountered a bug that randomly failed my program. It happened because of an edge case that I failed to address in the step before iterating through the map, but it took me a fair amount of time to pinpoint that issue. Based on my previous experiences, logic errors won't produce random results only wrong results. So the randomness sent me off track to check my inputs and environment settings until finally I circiled back to find the issue with a bunch of logging. The randomness in my error was in fact caused by GO map's random iteration order.
+                </p>
+                <p>
+                    After some researching, it seems that GO randomizes it's starting position when iterating through the map as can be seen from the <a href="https://golang.org/src/runtime/map.go#L826">source code comment</a>. As per this <a href="https://stackoverflow.com/a/55925880">StackOverflow post</a>, it seems this feature is introduced in GO v1 as a countermeasure towards bug-prune code that assumes hashmap's fixed looping order, and as a soft guard against worst time lookup time of <icode>n</icode> should one choose to use a for loop.
+                </p>
+                <p>
+                    Going back to the code earlier, given GO's random-access nature, the results should be different each run. And indeed, that is what happened:
+                </p>
+                <ul class='ccode'>
+                    <li><pre>// Sample Output</pre></li>
+                    <li><pre>1+1 - 2</pre></li>  
+                    <li><pre>2+2 - 4</pre></li>  
+                    <li><pre>4+10 - 14</pre></li>
+                    <li><pre>14*1 - 14</pre></li>
+                    <li><pre>14*2 - 28</pre></li>
+                    <li><pre>28*5 - 140</pre></li>
+                    <li><pre>Final result: 140</pre></li>
+                    <li><pre>1*2 - 2</pre></li>
+                    <li><pre>2*5 - 10</pre></li>
+                    <li><pre>10+1 - 11</pre></li>
+                    <li><pre>11+2 - 13</pre></li>
+                    <li><pre>13+10 - 23</pre></li>
+                    <li><pre>23*1 - 23</pre></li>
+                    <li><pre>Final result: 23</pre></li>
+                    <li><pre>1*5 - 5</pre></li>
+                    <li><pre>5+1 - 6</pre></li>
+                    <li><pre>6+2 - 8</pre></li>
+                    <li><pre>8+10 - 18</pre></li>
+                    <li><pre>18*1 - 18</pre></li>
+                    <li><pre>18*2 - 36</pre></li>
+                    <li><pre>Final result: 36</pre></li>
+                    <li><pre>1+1 - 2</pre></li>
+                    <li><pre>2+2 - 4</pre></li>
+                    <li><pre>4+10 - 14</pre></li>
+                    <li><pre>14*1 - 14</pre></li>
+                    <li><pre>14*2 - 28</pre></li>
+                    <li><pre>28*5 - 140</pre></li>
+                    <li><pre>Final result: 140</pre></li>
+                    <li><pre>1*5 - 5</pre></li>
+                    <li><pre>5+1 - 6</pre></li>
+                    <li><pre>6+2 - 8</pre></li>
+                    <li><pre>8+10 - 18</pre></li>
+                    <li><pre>18*1 - 18</pre></li>
+                    <li><pre>18*2 - 36</pre></li>
+                    <li><pre>Final result: 36</pre></li>
+                </ul>
+
+                <h2>Final Thoughts</h2>
+                <p>
+                    As for whether this is a good feature or not, I'm torwards accepting it. Granted I was originally quite confused and mad at this rather peculiar feature as it adds something unnecessary to the implementation without obvious efficiency gain and made my debugging process difficult. However, this <a href="https://nathanleclaire.com/blog/2014/04/27/a-surprising-feature-of-golang-that-colored-me-impressed/">blog by Nathan LeClair</a> provides me with a new insight (and a great title for this post). He sees this feature as part of an act against "sloppy programming" and reflects the strong attitude of GO designers to make things right rather than flexible. Honestly, I can't agree more. As a Java programmer from the beginning, I'm used to and appreciate languages that are exact and orderly. I think a good language should support programmers to succeed in what they try to achieve by implementing strict rules as part of the language design rather than allowing too much freedom and glazing over potential risks with some "reasonable" compromises.
+                </p>
+                <p>
+                    What I like about C-like languages is that, first of all, it's full-fledged nature to produce working code in any kind of settings, although less effectively in some cases. Then it's the ability to customize everything to the programmer's wishes without interfering too much. The language itself should not be a polished user program in itself that entertains programmers, but rather as a toolkit that empowers them.
+                </p>
+
+                <h3>Useful Links/References:</h3>
+                <p>
+                    <a href="https://en.wikipedia.org/wiki/Birthday_problem">Birthday Problem Wiki</a><br>
+                    <a href="https://golang.org/src/runtime/map.go#L826">GO map Source Code</a><br>
+                    <a href="https://nathanleclaire.com/blog/2014/04/27/a-surprising-feature-of-golang-that-colored-me-impressed/">Nathan's Post</a><br>
+                </p>
+            </div>
+        </div>
+
+        <!-- Contact Section -->
+        <div id='contact-root'>
+            <p>Contact at: harrynjc@gmail.com</p>
+            <a href="https://github.com/Hackerry"><i class="fab fa-github"></i></a>
+        </div>
+    </body>
+</html>
