@@ -39,3 +39,7 @@ thead {border-bottom: 1px solid #636363;}
 .ccode > li::before {counter-increment:linenum; content:counter(linenum);display:inline-block;background-color:#585858;text-align:center;width:25px;color:lightgrey;}
 icode {color:#a20b00;padding:5px;border-radius:5px;font-family:monospace,monospace;font-size:0.8em;display:inline-block;text-align:left;}
 #content-date{padding-bottom: 20px;}
+.iterm {background-color:black;font-size:1.2em;padding:0.5em 0.5em;line-height:1.2em;font-family:"Courier New", Courier, monospace;color:white;margin:20px 0;}
+.iterm *::selection {background-color:white; color:black;}
+.dots {content:"";}
+.dots::after {content:"**********";display:block;width:100%;height:1em;margin:20px 0;letter-spacing:0.5em;}
