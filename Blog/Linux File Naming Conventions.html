@@ -203,6 +203,7 @@
                     <li>Special characters in a filename need to be escaped or single-quoted to avoid automatic shell expansion</li>
                     <li>Better run <icode>ls</icode>, <icode>file</icode> or <icode>pwd</icode> first before running <icode>rm</icode> on files with "not-so-regular" names to make sure filenames are correctly escaped</li>
                     <li>When referring to files that contain control sequences (ie. shown as <icode>'^X'</icode>), either use tab completion, or search for the specfic hex code of that control sequence with <icode>man ascii</icode> and then use <icode>printf</icode> like so to refer to them: <icode>rm `printf 'file\x13'`</icode></li>
+                    <li><b>Update:</b> To refer to file name start with '-' (ie. rm, ls, etc), use '--' to escape. For example, <icode>rm -- -g</icode> (for detail please consult <icode>man</icode> page).</li>
                 </ol>
                 <br>
 
