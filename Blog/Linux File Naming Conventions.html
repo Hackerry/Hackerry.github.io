@@ -49,7 +49,7 @@
                 <div class='iterm'>
                     <span>$ rm -rf ~</span><br>
                     <span>$ </span><br>
-                    <span>$ // Uhm...</span><br>
+                    <span>$ # Uhm...</span><br>
                     <span class='blink-cursor'>$ yes "no!!!!!!!!!!!!!!!"</span><br>
                 </div>
 
@@ -63,7 +63,7 @@
                 <br class='dots'>
 
                 <p>
-                    Let me make my execuse first :^). I'd never run such a command on its own, knowing what it does. However, the reason I ran the command the other day was that a directory named <icode>~</icode> was created in my current directory due to some malformatted commands I ran previously.
+                    Let me make my execuse first :^). I'd never run such a command on its own, knowing what it does. However, the reason I ran the command the other day was that a directory named <icode>~</icode> was created in my working directory due to some malformatted commands I ran previously.
                 </p>
                 <p>
                     I admit I was being careless, as I thought "well that's easy, let me delete it with <icode>rm -rf ~</icode>". So I hit enter and went on with my work, without even realizing what I had done for the next half an hour. I only realized my mistake when I failed to ssh back into that machine, since the <icode>~/.ssh </icode> folder must have been deleted as well. Ugh.
@@ -78,7 +78,7 @@
                     I originally thought there would be no better way to understand Linux file system's (Ext4's) naming conventions by finding the piece of kernel code that does pathname validation.
                 </p>
                 <p>
-                    After all the real Linux source code must be the most reliable source of information for such a thing.
+                    After all, the real Linux source code must be the most reliable source of information for such a thing.
                 </p>
                 <p>
                     Sadly though, after some hunt and researching, I found it was impossible.
@@ -97,9 +97,9 @@
                 <br class='dots'>
 
                 <p>
-                    It turns out, the real story is more complicated. According to these two posts (<a href='https://www.win.tue.nl/~aeb/linux/vfs/trail-2.html'>post1</a>, <a href='https://stackoverflow.com/a/34102855'>post2</a>), there's no such thing as path validation per se. Hardware only does one thing and one thing only, that is to search for that file when given an arbitrary file path. The process of searching a file is as following:
+                    It turns out, the real story is more complicated. According to these two posts (<a href='https://www.win.tue.nl/~aeb/linux/vfs/trail-2.html'>post1</a>, <a href='https://stackoverflow.com/a/34102855'>post2</a>), there's no such thing as path validation per se. Hardware only does one thing and one thing only, that is to search for a file when given the file path of that file. The process of searching a file is as following:
                 </p>
-                <ol style='padding-left:20px;'>
+                <ol>
                     <li>Get filename string</li>
                     <li>Construct structs and copy them from user space to kernel space</li>
                     <li>Hardware starts from the root directory inode and "walks" along inode links to search for the file</li>
@@ -177,7 +177,8 @@
                     <span>$ touch `printf 'hello\r'`</span><br>
                     <span>$ ls</span><br>
                     <span>'hello'$'\r'</span><br>
-                    <span>$ ls hello^M  // I use tab completion here</span><br>
+                    <span>$ ls hello^M</span><br>
+                    <span>$ #      ^I used tab completion here</span><br>
                     <span>$ </span><br>
                     <span>$ touch `printf 'hello\rbye'`</span><br>
                     <span>$ ls</span><br>

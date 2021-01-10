@@ -47,61 +47,62 @@
                 <p>
                     I've used lambda expressions before in my JavaFX projects, mainly to save some time typing anonymous event listeners. Now after I learned more on the subject, I find my initial feeling is quite accurate in defining the use of lambda expressions - <b>to save time</b>.
                 </p>
-                <p>Let's take comparators for example. Previously if we want to customize a comparator in Java, you would take one of the following ways:</p>
+                <p>Let's take comparators for example. Previously if I want to customize a comparator in Java, I would do so in one of the following two ways:</p>
                 <p>
                     <ol>
                         <li>Define a new comparator class that implements <icode>Comparator&lt;T&gt;</icode> and overrides the <icode>compare()</icode> method (good for reuse)</li>
                         <li>Define an anonymous <icode>Comparator&lt;T&gt;</icode> class and overrides the <icode>compare()</icode> method (good for single use)</li>
                     </ol>
                 </p>
-                <p>In both cases, we would type a lot of words before defining the actual <icode>compare()</icode> method.</p>
+                <p>In both cases, I would type a lot of words before defining the actual <icode>compare()</icode> method.</p>
 
                 <ul class='ccode'>
                     <li><pre>public class Example {</pre></li>
-                    <li><pre>    public static void main(String[] args) {</pre></li>
-                    <li><pre>        ArrayList&lt;Integer&gt; nums = new ArrayList&lt;&gt;(Arrays.asList(1,2,3,4,10,9,8,7,5,6));</pre></li>
-                    <li><pre>        </pre></li>
-                    <li><pre>        // Method 1: Instantiate Comparator class</pre></li>
-                    <li><pre>        Collections.sort(nums, new MyComparator());</pre></li>
-                    <li><pre>        System.out.println(nums);  //[1,3,5,7,9,2,4,6,8,10]</pre></li>
+                    <li><pre>  public static void main(String[] args) {</pre></li>
+                    <li><pre>    ArrayList&lt;Integer&gt; nums = new ArrayList&lt;&gt;(Arrays.asList(1,2,3,4,10,9,8,7,5,6));</pre></li>
                     <li><pre></pre></li>
-                    <li><pre>        // Method 2: Anonymous Comparator class</pre></li>
-                    <li><pre>        Collections.sort(nums, new Comparator&lt;Integer&gt;() {</pre></li>
-                    <li><pre>            @Override</pre></li>
-                    <li><pre>            public int compare(Integer i1, Integer i2) {</pre></li>
-                    <li><pre>                return i1 % 2 == 0 ? (i2 % 2 == 0 ? i1-i2: 1): (i2 % 2 == 0 ? -1: i1-i2);</pre></li>
-                    <li><pre>            }</pre></li>
-                    <li><pre>        });</pre></li>
-                    <li><pre>        System.out.println(nums);  //[1,3,5,7,9,2,4,6,8,10]</pre></li>
-                    <li><pre>    }</pre></li>
+                    <li><pre>    // Method 1: Instantiate Comparator class</pre></li>
+                    <li><pre>    Collections.sort(nums, new MyComparator());</pre></li>
+                    <li><pre>    System.out.println(nums);  //[1,3,5,7,9,2,4,6,8,10]</pre></li>
+                    <li><pre></pre></li>
+                    <li><pre>    // Method 2: Anonymous Comparator class</pre></li>
+                    <li><pre>    Collections.sort(nums, new Comparator&lt;Integer&gt;() {</pre></li>
+                    <li><pre>      @Override</pre></li>
+                    <li><pre>      public int compare(Integer i1, Integer i2) {</pre></li>
+                    <li><pre>        return i1 % 2 == 0 ? (i2 % 2 == 0 ? i1-i2: 1): (i2 % 2 == 0 ? -1: i1-i2);</pre></li>
+                    <li><pre>      }</pre></li>
+                    <li><pre>    });</pre></li>
+                    <li><pre>    System.out.println(nums);  //[1,3,5,7,9,2,4,6,8,10]</pre></li>
+                    <li><pre>  }</pre></li>
                     <li><pre>}</pre></li>
                     <li><pre></pre></li>
                     <li><pre>class MyComparator implements Comparator&lt;Integer&gt; {</pre></li>
-                    <li><pre>    @Override</pre></li>
-                    <li><pre>    public int compare(Integer i1, Integer i2) {</pre></li>
-                    <li><pre>        return i1 % 2 == 0 ? (i2 % 2 == 0 ? i1-i2: 1): (i2 % 2 == 0 ? -1: i1-i2);</pre></li>
-                    <li><pre>    }</pre></li>
+                    <li><pre>  @Override</pre></li>
+                    <li><pre>  public int compare(Integer i1, Integer i2) {</pre></li>
+                    <li><pre>    return i1 % 2 == 0 ? (i2 % 2 == 0 ? i1-i2: 1): (i2 % 2 == 0 ? -1: i1-i2);</pre></li>
+                    <li><pre>  }</pre></li>
                     <li><pre>}</pre></li>
                 </ul>
 
                 <p>
-                    Now with lambda expressions, those unnecessary typings are all gone. We can define our anonymous class as:
+                    Now with lambda expressions, those unnecessary typings are all gone. I can define the anonymous class as such:
                 </p>
 
                 <ul class='ccode'>
                     <li><pre>// Method 3: Lambda Expression</pre></li>
-                    <li><pre>Collections.sort(nums, (a,b) -&gt; a % 2 == 0 ? (b % 2 == 0 ? a-b: 1): (b % 2 == 0 ? -1: a-b));</pre></li>
+                    <li><pre>Collections.sort(nums, (a,b) -&gt; a % 2 == 0 ? (b % 2 == 0 ? a-b: 1): </pre></li>
+                    <li><pre>      (b % 2 == 0 ? -1: a-b));</pre></li>
                     <li><pre>System.out.println(nums);  //[1,3,5,7,9,2,4,6,8,10]</pre></li>
                 </ul>
 
                 <p>
-                    It's indeed a lifesaver! The parenthesis shows that we are overriding the abstract function in the interface. We can also pass in parameters as before. The arrow is quite straightforward in showing how the function is defined. In short terms, lambda expression let us override methods without the class framework.
+                    It's indeed a lifesaver! The parenthesis reminds me that I'm overriding the abstract function <icode>compare(T a, T b)</icode> in the <icode>Comparator&lt;T&gt;</T></icode> interface. The arrow indicates that I'm defining the function body as follows. In short, lambda expressions let me override methods without the class framework.
                 </p>
                 <p>
-                    As expected, there are some inconvenience associated with this convenience. To use lambda expressions, there is a major constraint, namely the overriden method must be the only abstract method in the interface we wish to implement. We call such an interface a <b>functional interface</b>.
+                    As expected, there are some limitations of lambda expressions. To use them, there is a major constraint on the type of interface that is to be implemented, namely the interface must contain one and only one abstract method. Such interface is called a <b>functional interface</b>.
                 </p>
                 <p>
-                    The reason behind, as I understand is quite simple. Since we don't have the traditional framework for defining anonymous class, there's no way for one lambda expression to implement several abstract methods at the same time. To avoid making mistakes, it's good practice to annotate a functional interface with <icode>@FunctionalInterface</icode> on top of the signature.
+                    The reason behind, as I understand is quite simple. Since we don't have the traditional framework for defining an anonymous class, there's no way for one lambda expression to implement several abstract methods at the same time. To avoid making mistakes like using lambda expressions on a non-functional interface, it's a good practice to annotate with the <icode>@FunctionalInterface</icode> tag when using lambda expressions to get some help from the compiler.
                 </p>
 
                 <h2>Java Stream</h2>
@@ -109,41 +110,60 @@
                 <p>
                     The name of Stream is pretty explainatory. It's a stream of actions performed on an object and it's especially useful when analyzing or manipulating data.
                 </p>
-                <p>Before moving on to examples, we should first understand two concepts:</p>
+                <p>
+                    Or it can be understood as performing operations on a stream of data.
+                </p>
+                <p>Before moving on to examples, let's first understand two important concepts in Java Stream:</p>
                 <h3>1. Intermediate &amp; Terminal Operations</h3>
                 <p>
-                    An intermediate operation is used to manipulate data in certain ways and return the result back. For example, we may want to pick data only data with value greater than 100, get the id of each employee or sort ages in increasing order. <icode>filter()</icode> and <icode>map()</icode> are examples of intermediate operations.<br>
-                    A terminal operation is often used to summarize data or pack processed data to a container. For example, we may want to find the sum or average of a list of numbers or to create a map between employee id and employee salary from a list of employees. <icode>collect()</icode> and <icode>count()</icode> are examples of terminal operations.
+                    An intermediate operation is used to manipulate data in certain ways and return the result. Exemplary uses would be to filter out value greater than 100 from a list of values, get the id of each Employee object in a list or sort a list of numbers in increasing order. <icode>filter()</icode> and <icode>map()</icode> are examples of intermediate operations.<br>
+                    A terminal operation is often used to summarize data or pack processed data to a container. Exemplary uses would be to find the sum or average of a list of numbers or to create a map between employee id and employee salary from a list of Employee objects. <icode>collect()</icode> and <icode>count()</icode> are examples of terminal operations.
                 </p>
                 <h3>2. Predicates, Consumers, Functions and Suppliers</h3>
                 <p>
-                    These functional interfaces are also introduced in Java 8 and they facilitate the use of lambda expressions in streams (as we shall see later).<br>
+                    These functional interfaces are also introduced in Java 8 and they take advantage of the use of lambda expressions in streams.<br>
                     A Predicate provides <icode>boolean test(T t)</icode> method for testing certain properties of an object.<br>
                     A Consumer provides <icode>void accept(T t)</icode> method for performing actions on an object.<br>
-                    A Function provides <icode>R apply(T t)</icode> method for manipulating an object and returning the result.<br>
+                    A Function provides <icode>R apply(T t)</icode> method for manipulating an object and returning a potentially different result.<br>
                     A Supplier provides <icode>T get()</icode> method for feeding data into the stream.<br>
                 </p>
                 <p>
-                    Now with these two concepts ready, we can dive into some examples. The first example shows how to calculate the average of a list of integers with stream.
+                    Now with these two concepts ready, let's dive into some examples. The first example shows how to calculate the average of a list of integers with stream.
                 </p>
                 <ul class='ccode'>
-                    <li><pre>ArrayList&lt;Integer&gt; ages = new ArrayList&lt;&gt;(Arrays.asList(21,25,40,60,54,12,23,30,29,48));</pre></li>
-                    <li><pre>double averageAge = ages.stream().mapToInt(Integer::intValue).average().getAsDouble();</pre></li>
+                    <li><pre>ArrayList&lt;Integer&gt; ages = </pre></li>
+                    <li><pre>   new ArrayList&lt;&gt;(Arrays.asList(21,25,40,60,54,12,23,30,29,48));</pre></li>
+                    <li><pre>double averageAge = ages.stream()</pre></li>
+                    <li><pre>                        .mapToInt(Integer::intValue)</pre></li>
+                    <li><pre>                        .average()</pre></li>
+                    <li><pre>                        .getAsDouble();</pre></li>
                     <li><pre>System.out.println(averageAge);    //34.2</pre></li>
                 </ul>
                 <p>
-                    First, we get the stream by calling <icode>stream()</icode> function on the <icode>ArrayList</icode>. Then we specifically convert a stream of integers into an <icode>IntStream</icode> through the map function. With an <icode>IntStream</icode>, we can easily calculate the average and return the result as a double.
+                    First, we get the stream by calling <icode>stream()</icode> on the list of ages. Then we explicitly convert a stream of integers into an <icode>IntStream</icode> through the <icode>mapToInt</icode> function. With an <icode>IntStream</icode>, we can easily calculate the average of ages and return the result as a double.
                 </p>
+                <br>
+                <br class='dots'>
+                <br>
 
                 <ul class='ccode'>
                     <li><pre>Map&lt;Character, String&gt; initialMap = Arrays.stream(new String[] {</pre></li>
                     <li><pre>    "Harry", "Jelly", "Alice", "Bob", "Leonardo DiCaprio"</pre></li>
-                    <li><pre>}).filter((s) -&gt; !s.contains(" ")).collect(Collectors.toMap((s) -&gt; s.charAt(0), (s) -&gt; s));</pre></li>
+                    <li><pre>}).filter((s) -&gt; !s.contains(" "))</pre></li>
+                    <li><pre>  .collect(Collectors.toMap((s) -&gt; s.charAt(0), (s) -&gt; s));</pre></li>
                     <li><pre>System.out.println(initialMap);    //{A=Alice, B=Bob, H=Harry, J=Jelly}</pre></li>
                 </ul>
                 <p>
-                    This example introduces two more common functions used in stream: <icode>filter()</icode> and <icode>collect()</icode>. <icode>filter()</icode> is used to select only those elements that satisify a certain condition. Here we use a Predicate as the condition checker, and we implement it with a lambda expression (remeber what we talked about before?). <icode>collect()</icode> is used to pack data to a container. In this case, we pack our data into a map and use two functions to specify how to generate the key and value pair in the map.
+                    This example introduces two more common functions used in stream: <icode>filter()</icode> and <icode>collect()</icode>.</p>
+                <p>
+                    <icode>filter()</icode> is used to select only those elements that satisify a certain condition. Here we use a Predicate as the condition checker, and we implement it with a lambda expression (remeber what we talked about before?).
                 </p>
+                <p>
+                    <icode>collect()</icode> is used to pack data to a container. In this case, we'd like to pack our data into a map. We specified two Function to generate the key and value pair in the map - the key is generated by taking the first character of the given name and value is the name itself. The two Function are implemented using lambda expressions.
+                </p>
+                <br>
+                <br class='dots'>
+                <br>
 
                 <p>
                     Finally, let's look at a special use of <icode>collect()</icode>. (This example is adopted from stream package summary. See reference below.)
