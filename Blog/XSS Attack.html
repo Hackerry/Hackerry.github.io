@@ -57,7 +57,7 @@
                     Now, I do ask you to type something and hit enter like you did so many times today (if you have no idea what to write, just answer "How are you today?").
                 </p>
                 <p>
-                    You should see the content of what you just entered appeared below. Go ahead and try more if you like. Basically, it's just taking whatever you entered and add to the webpage.
+                    You should see the content of what you just entered appeared below. Go ahead and try more if you like. Basically, it's just taking whatever you enter and adding it to the webpage.
                 </p>
 
                 <h2>Step 1 - Insert Image</h2>
@@ -66,7 +66,7 @@
                     <icode>&lt;img src='imgs/ARP-6.png'/&gt;</icode>
                 </p>
                 <p>
-                    Surprise! You saw an image from my <a href='Experimenting with ARP Poisoning Attack.html'>previous post</a> on ARP poisoning attack. The previous line of code is specifying an HTML image element. Since the input box is just taking whatever in the text box and add to the webpage's HTML file, the browser will falsely parse this image element as an request to fetch the real image and paste it here, instead of just a random and weird line of text.
+                    Surprise! You saw an image from my <a href='Experimenting with ARP Poisoning Attack.html'>previous post</a> on ARP poisoning attack. The previous line of code is specifying an HTML image element. Since the input box is just taking whatever in the text box and add to the webpage's HTML file, the browser will falsely parse this image element as a request to fetch that image and show it here.
                 </p>
                 <p>
                     This is a vulnerability of the webpage that can be exploited by malicious users to, say for example, insert unwanted images, texts, even other webpage's URLs without consent from the webpage maker. The consequence of those acts really depends on the content being inserted. A cute cat picture is far more benign than a purposefully crafted phishing site's URL. As a example, try this line:<br>
@@ -82,7 +82,7 @@
                     <icode>&lt;iframe src='Blog_Main.html'/&gt;</icode>
                 </p>
                 <p>
-                    Yes. You are not wrong! You can access a webpage within another webpage. It's the exact same page you see if you type the URL in a browser.
+                    Yes! You can access a webpage within another webpage. It's the exact same page you see if you type the URL in a browser.
                 </p>
                 <p>
                     Now the problem starts to show itself. Just with the ability to inject random code onto a page, one can overwrite the whole page's information without user noticing. No things on a webpage is safe from being replaced or erased. Regular users can be easily tricked to click on malicous links or login with credentials on a fake website.
@@ -112,8 +112,18 @@
                 <p>
                     The essense of XSS Attack is to insert some JS code into a webpage and get it to run on the victim's browser. The goal is to either trick the user into clicking some link, or to secretly send user's data to attacker from the victim's machine. In most cases, it starts with inserting code to a website, which the server preserves. Then the server presents the saved information, together with malicious code, to the next user who access that same webpage. A real-life example would be any chat sections of a website, where posting and sharing is very common.
                 </p>
+
+                <br>
+                <p style='border:2px dashed #636363;padding: 2px 5px;'>
+                    <b>Update</b>: This post covers only a subtype of XSS attacks called "Stored XSS Attack". The other type is "Reflective XSS Attack".
+                </p>
+                <br>
+
                 <p>
-                    The examples I presented before all are examples of such XSS attacks, but they are clearly harmless ones (and they are not persistent which means they can only run on your browser). However, in real life commercial websites, there are certainly more harmful attacks present. For example, let's take a look at "cookie stealing" which employs XSS. Attacker starts by injecting JS code similar to this:
+                    The examples I presented before all are examples of such XSS attacks, but they are clearly harmless ones (and they are not persistent which means they can only run on your browser). However, in real life commercial websites, there are certainly more harmful attacks present. For example, let's take a look at "cookie stealing" which employs XSS techniques.
+                </p>
+                <p>
+                    Attacker starts by injecting JS code similar to this:
                 </p>
                 <ccode>
                     <ul class='ccode'>
@@ -139,14 +149,14 @@
                     Let's start with the most basic and effective countermeasure - the "Same-origin Policy". To my limited undertanding of this policy, it dictates that resources and scripts retrieved from different origins (from different servers, ports, etc) should not be able to share sensitive information with one another. So cookies will not be shared between two distinct sites. In addition, including images from other websites can also be restricted by detecting and comparing their sources as the image shown below.
                 </p>
 
-                <div style="text-align: center;">
+                <div class='img-txt'>
                     <img src='imgs/Cross-Origin_Block.png' />
-                    <p>Error giving by Chrome when trying to include a Chrome logo image from Wikipedia</p>
+                    <h3>Error giving by Chrome when trying to include a Chrome logo image from Wikipedia</h3>
                 </div>
 
                 <br>
                 <p>
-                    Then as another layer of protection, modern commercial websites have highly adequate Risk Control/Management Systems that captures and stops identity theft in action. They use trained models to capture the real user's behavior and once they found the current action is out of character, like logging in from a different location or with a different device, then more secure credentials (like the user's login password) are required to confirm the user's identity and proceed with the action.
+                    Then as another layer of protection, modern commercial websites have highly adequate Risk Control/Management Systems that captures and stops identity theft in action. They use trained models to capture the real user's behavior and once they found the current action is out of character, like logging in from a different location or with a different device, then more secure credentials (like the user's login password) are required to confirm the user's identity to proceed with the action.
                 </p>
 
                 <h3>Useful Links/References:</h3>

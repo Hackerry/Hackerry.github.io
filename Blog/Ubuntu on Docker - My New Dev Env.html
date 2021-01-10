@@ -35,10 +35,10 @@
                 <p id='content-date'>Dec. 19, 2020, 01:56:40</p>
 
                 <p>
-                    For so long, I've been searching for a easy Linux development environment setup for doing my projects on Windows.
+                    For so long, I've been searching for a convenient Linux development environment setup for doing my projects on Windows.
                 </p>
                 <p>
-                    I have an Ubuntu laptop, which is 6 years old now and long passed its retirement age. Just starting it up will take more than a minute. Not to mention if Ubuntu happens to have a mandatory update, it would freeze completely after startup until the upgrade finishes.
+                    I have a Ubuntu laptop, which is 6 years old now and long passed its retirement age. Just starting it up will take more than a minute. Not to mention if Ubuntu happens to have a mandatory update, it would freeze completely after startup until the upgrade finishes.
                 </p>
                 <p>
                     On the other hand, I have a very powerful and new Windows desktop that I assembled in early 2019. Honestly I originally set it up as a gaming PC, with a large monitor and a mechanical keyboard. With these peripherals, writing code on it should be as smooth and enjoyable as a I can ever imagine. The only downside is, however, that it's running Windows 10.
@@ -89,21 +89,23 @@
                 </p>
                 <p>
                     After the installation is done and the machine is restarted, Docker automatically opens up.
-                    <img src='imgs/Docker-1.png' style='max-width:100%;'>
+                    <div class='img-txt'>
+                        <img src='imgs/Docker-1.png' style='max-width:100%;'>
+                    </div>
                 </p>
                 <p>
-                    I run <icode>docker image</icode> in the terminal to make sure <icode>docker</icode> command is properly setup. The output shows there aren't any images on the machine yet.
+                    I run <icode>docker images</icode> in the terminal to make sure <icode>docker</icode> command is properly setup. The output shows there aren't any images on the machine yet.
                 </p>
 
                 <p>
                     Now let's pull the most recent Ubuntu image from Dockerhub using <icode>docker pull ubuntu</icode> and check the downloaded image using <icode>docker images</icode>.
-                    <div style='text-align:center;'>
+                    <div class='img-txt'>
                         <img src='imgs/Docker-2.png' style='max-width:100%;'>
                     </div>
                 </p>
                 <p>
                     Next, run a Ubuntu container from image(<icode>ubuntu</icode>) with <icode>docker run -it --name ubuntuvm ubuntu</icode>. The name of the container is <icode>ubuntuvm</icode>. I want to interact(<icode>-i</icode>) with the container in the terminal (<icode>-t</icode>) once it's started.
-                    <div style='text-align:center;'>
+                    <div class='img-txt'>
                         <img src='imgs/Docker-3.png' style='max-width:100%'>
                     </div>
                 </p>
@@ -112,7 +114,7 @@
                 </p>
                 <p>
                     Next, I need to tag this image and lock it to prevent it from getting overwritten by future releases. The command is <icode>docker tag ubuntu:latest ubuntu:20.04.1</icode>. Effectively a copy of the image is created.
-                    <div style='text-align:center;'>
+                    <div class='img-txt'>
                         <img src='imgs/Docker-4.png' style='max-width:100%'>
                     </div>
                 </p>
@@ -123,19 +125,19 @@
                 </p>
                 <p>
                     First, let's re-run the container and create a user called hackerry. <icode>useradd -r hackerry</icode> creates user hackerry and the home folder. <icode>passwd hackerry</icode> changes login password of user hackerry.
-                    <div style='text-align:center;'>
+                    <div class='img-txt'>
                         <img src='imgs/Docker-5.png' style='max-width:100%'>
                     </div>
                 </p>
                 <p>
                     To be able to connect to this container, I need to configure it as an SSH server. Install <icode>openssh-server</icode> packets with <icode>apt install openssh-server</icode>. Then start the service with <icode>/etc/init.d/ssh start</icode> and check the ssh connection.
-                    <div style='text-align:center;'>
+                    <div class='img-txt'>
                         <img src='imgs/Docker-6.png' style='max-width:100%'>
                     </div>
                 </p>
                 <p>
                     At this point, a basic Ubuntu VM is properly set up. I want to save the changes I've made to this container as a backup image so that I don't have to go through all those configuration again in the future. I run <icode>docker commit ubuntuvm ubuntuvm</icode> to convert the <icode>ubuntuvm</icode> container I just modified to a image.
-                    <div style='text-align:center;'>
+                    <div class='img-txt'>
                         <img src='imgs/Docker-7.png' style='max-width:100%'>
                     </div>
                 </p>
@@ -143,13 +145,13 @@
                 <h2>Test My Ubuntu VM</h2>
                 <p>
                     Finally I'm ready to test my setup using the image I just created. I start the container in detached mode (<icode>-d</icode>) and expose container port 22(ssh) to a random port on my host machine(9999) with the expose flag(<icode>-p</icode>). The ending arguments tells the container to start the ssh server on startup and then wait and listen for incoming ssh connections.
-                    <div style='text-align:center;'>
+                    <div class='img-txt'>
                         <img src='imgs/Docker-8.png' style='max-width:100%'>
                     </div>
                 </p>
                 <p>
                     As shown above, I can successfully ssh into the container through port 9999 with my credentials. I can also see that the container is running with <icode>docker ps -a</icode> or through the Docker application.
-                    <div style='text-align:center;'>
+                    <div class='img-txt'>
                         <img src='imgs/Docker-9.png' style='max-width:100%'>
                     </div>
                 </p>

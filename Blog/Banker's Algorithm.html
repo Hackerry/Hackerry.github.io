@@ -30,7 +30,7 @@
 
         <!-- Content section -->
         <div id='content-wrapper'>
-            <div id='content' style='width:750px;'>
+            <div id='content'>
                 <h1>Banker's Algorithm and some thoughts</h1>
                 <p id='content-date'>May. 28, 2020, 23:42:58</p>
                 <p>
@@ -82,7 +82,7 @@
                 </p>
 
                 <p>
-                    Then for all the rest, we construct a <b>Need</b> table for each process that lists how many more resources each job needs (remember we've already assigned some resources): <br>
+                    Then for the rest jobs, we construct a <b>Need</b> table for each process that lists how many more resources each job needs (remember we've already assigned some resources): <br>
                     <table>
                         <thead><td>Job Name</td><td>Workers Need</td><td>Trucks Need</td><td>Cranes Need</td></thead>
                         <tr><td>Parking Lot</td><td>6</td><td>2</td><td>2</td></tr>
@@ -91,15 +91,30 @@
                         <tr><td>Garage Door</td><td>1</td><td>0</td><td>0</td></tr>
                         <tr><td colspan="4">Table 3</td></tr>
                     </table>
-                    Also note that we now have 4 workers, 3 trucks and 2 cranes <b>Available</b> to be assigned.
+                    Also note that we have 4 workers, 3 trucks and 2 cranes <b>Available</b> to be assigned.
                 </p>
 
                 <p>
-                    For the next step, we look through each job and decide whether the available resources right now are enough to finish that job. If we do, then we assign the demanded amount of resources to that job. Then after it finishes, all allocated resources will be reclaimed and can be used for the next job. However, if we don't have enough resources right now, we move on to test the next one in the hope that we can reclaim more resources down the line. If we test all jobs and can't finish any of them with the resources avaliable, we are sure that's all we can do without forcing some jobs relinquish their currently assigned resources.
+                    For the next step, we look through each job and decide whether the available resources right now are enough to finish that job. If we do, then we assign the demanded amount of resources to that job. And after it finishes, all allocated resources will be reclaimed and can be used for the next job.
                 </p>
+                <p>
+                    However, if we don't have enough resources right now for a certain job, we move on to test the next one in the hope that we can reclaim more resources down the line. If we test all jobs and can't finish any of them with the resources avaliable, we are sure that's all we can do without forcing some jobs relinquish their currently assigned resources.
+                </p>
+                <br>
+                <br class='dots'>
+                <br>
 
                 <p>
-                    Move back to the construction company example, we first test the Parking Lot job and discover that we don't have enough workers for it. Therefore, we go on to the Wooden House job. Now we have enough wokers and trucks to get the job done. We allocate those resources to it and after it finishes, we get back both the previously assigned resources (by our vice manager) and the resources allocated by us. Mathematically, we just add the previously allocated resources (3 workers) back to our avaliable resource list. We have 7 workers, 3 trucks and 2 cranes at out hand for the next Radio Tower job, which is insufficient, so we move on to the next job. We can finish the Garage Door job and reclaim one crane. Now with 7 workers, 3 trucks and 3 cranes, we can finish the Parking Lot job and get back 2 workers and 2 trucks. Then with full resources back, we can definitely finish the Radio Tower job.
+                    Move back to the construction company example, we first test the Parking Lot job and discover that we don't have enough workers for it. Therefore, we go on to the Wooden House job.
+                </p>
+                <p>
+                    Now we have enough wokers and trucks to get the job done. We allocate those resources to it and after it finishes, we get back both the previously assigned resources (allocated by our vice manager) and the resources allocated by us. Mathematically, we just add the previously allocated resources (3 workers) back to our avaliable resource list.
+                </p>
+                <p>
+                    We have 7 workers, 3 trucks and 2 cranes at out hand for the next Radio Tower job, which is insufficient, so we move on to the next job.
+                </p>
+                <p>
+                    We can finish the Garage Door job and reclaim one crane. Now with 7 workers, 3 trucks and 3 cranes, we can finish the Parking Lot job and get back 2 workers and 2 trucks. Then with full resources back, we can definitely finish the Radio Tower job.
                 </p>
 
                 <p>
@@ -107,7 +122,7 @@
                 </p>
 
                 <p>
-                    Luckily, we were in a <b>"safe state"</b> (after our vice manager's presumptuous assignment). We were able to finish all possible jobs without running into a deadlock. The above sequence is also called a <b>"safe sequence"</b>. However, if our manager assigned 4 more workers to the impossible Town Hall job, we'll not be able to get any jobs done (we have no workers left), thus ending in an <b>"unsafe state"</b> and thus deadlock.
+                    Luckily, we were in a <b>"safe state"</b> (after our vice manager's presumptuous assignment). We were able to finish all possible jobs without running into a deadlock. The above working sequence is also called a <b>"safe sequence"</b>. However, if our manager assigned 4 more workers to the impossible Town Hall job, we'll not be able to get any jobs done (we have no workers left), thus ending in an <b>"unsafe state"</b> and thus deadlock.
                 </p>
 
                 <h2>In Practice</h2>
