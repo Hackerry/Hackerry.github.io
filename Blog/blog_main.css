@@ -10,5 +10,5 @@
 #tag-list:hover {cursor:hand;}
 #contact-root {clear: both;}
 .entry {margin-bottom:30px;padding-bottom:20px;}
-.entry > a {color:#636363;font-size:1.8em;font-weight:bold;}
+#blog-list a {color:#636363;font-size:1.8em;font-weight:bold;text-decoration:none;}
 .post-overview {margin-top:10px;padding-top:10px;border-top:1px solid #636363;}
