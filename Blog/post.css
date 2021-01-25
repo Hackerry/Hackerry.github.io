@@ -42,6 +42,6 @@ icode {color:#a20b00;padding:5px;border-radius:5px;font-family:monospace,monospa
 .iterm *::selection {background-color:white; color:black;}
 .dots {content:"";}
 .dots::after {content:"**********";display:block;width:100%;height:1em;margin:20px 0;letter-spacing:0.5em;}
-.img-txt, .img-txt-small {display:block;max-width:100%;text-align:center;margin:50px 0 20px 0;font-size:1em;}
+.img-txt, .img-txt-small {display:block;max-width:100%;text-align:center;margin:50px 0;font-size:1em;}
 .img-txt img {max-width:100%;}
 .img-txt-small img {max-width:80%;}
