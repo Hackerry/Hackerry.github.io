@@ -1,11 +1,21 @@
 code = \
 '''\
-String alphabet = "qwertyuiopasdfghjklzxcvbnm";
-StringBuilder stringBuilder = Arrays.stream((alphabet.split(""))).sorted()
-    .collect(() -> new StringBuilder(), 
-            (sb,s) -> sb.append(s), 
-            (sb1, sb2) -> sb1.append(sb2.toString()));
-System.out.println(stringBuilder.toString());
+import java.util.Arrays;
+
+public class Main {
+    public static void main(String[] args) {
+        System.out.println("Starting program...");
+
+        // Initialize array 0-9
+        int[] numbers = new int[10];
+        for(int i = 0; i < numbers.length; i++) numbers[i] = i;
+
+        // Print out square
+        Arrays.stream(numbers).forEach(e -> System.out.println(e*e));
+
+        System.out.println("Program exit");
+    }
+}
 '''
 
 code = code.replace('&','&amp;')

