@@ -31,10 +31,9 @@ thead {border-bottom: 1px solid #636363;}
 #content ol {display:block;padding-left:50px;font-size:1.2em;}
 #content > a > img {margin: 50px 0;}
 #content > ul > li {font-size:1.2em;}
-.ccode {display:block;list-style:none;padding:0;counter-reset:linenum;font-size:0.8em;margin:20px 0;}
+.ccode {display:block;list-style:none;padding:0;counter-reset:linenum;font-size:0.8em;margin:20px 0;color:white;}
 .ccode > li {line-height:1.6em;}
-.ccode > li:nth-child(odd) {background: #c1c0c0;}
-.ccode > li:nth-child(even) {background: #e4e3e3;}
+.ccode > li {background: black;}
 .ccode > li::before {counter-increment:linenum; content:counter(linenum);display:inline-block;background-color:#585858;text-align:center;width:25px;color:lightgrey;}
 icode {color:#a20b00;padding:5px;border-radius:5px;font-family:monospace,monospace;font-size:0.8em;display:inline;text-align:left;}
 #content-date{padding-bottom: 20px;}

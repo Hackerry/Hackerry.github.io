@@ -472,39 +472,32 @@
                     DFS/BFS-like graph searching algorithm is a natrual choice. Following this idea and after doing some experimentations, I propose the following implementation of the piston precheck sequence, written in pseduocode:
                     <ul class='ccode'>
                         <li><pre>block36Queue = []</pre></li>
-                        <li><pre></pre></li>
-                        <li><pre>function precheck(block):</pre></li>
-                        <li><pre>    if block can be moved:</pre></li>
+                        <li><pre><span style='color:#2196f3'>function</span> <span style='color:#ffeb3b'>precheck</span>(block):</pre></li>
+                        <li><pre>    <span style='color:#2196f3'>if</span> block can be moved:</pre></li>
                         <li><pre>        ...</pre></li>
-                        <li><pre>        if block == "Slime Block":</pre></li>  
-                        <li><pre>            // Check attached blocks</pre></li>
-                        <li><pre>            loop through surrounding_blocks -> surrounding_block:</pre></li>
-                        <li><pre>                precheck(surronding_block)</pre></li>
+                        <li><pre>        <span style='color:#2196f3'>if</span> block == <span style='color:#d8721a'>"Slime Block"</span>:</pre></li>
+                        <li><pre>            <span style='color:#9e9e9e'>// Check attached blocks</span></pre></li>
+                        <li><pre><span style='color:#9e9e9e'></span>            loop through surrounding_blocks -&gt;<span style='color:#DAF7A6 '></span> surrounding_block:</pre></li>
+                        <li><pre>                <span style='color:#ffeb3b'>precheck</span>(surronding_block)</pre></li>
                         <li><pre>        ...</pre></li>
-                        <li><pre></pre></li>
-                        <li><pre></pre></li>
-                        <li><pre>        blocksToMove.append(block)</pre></li>
-                        <li><pre>        precheck(block_in_front)</pre></li>
-                        <li><pre>    else if block == "Air":</pre></li>
-                        <li><pre>        return true</pre></li>
-                        <li><pre></pre></li>
-                        <li><pre>    if len(blocksToMove) > 12:</pre></li>
-                        <li><pre>        canMove = false</pre></li>
-                        <li><pre></pre></li>
-                        <li><pre>    return false</pre></li>
-                        <li><pre></pre></li>
-                        <li><pre>function piston_powered():</pre></li>
-                        <li><pre>    canMove = precheck(block_in_front_of_piston)</pre></li>
-                        <li><pre></pre></li>
-                        <li><pre>    if canMove:</pre></li>
-                        <li><pre>        while blocksToMove not Empty:</pre></li>
-                        <li><pre>            moveBlock = pop(blocksToMove)</pre></li>
-                        <li><pre>            moveBlock.Move_Forward()</pre></li>
-                        <li><pre>            block36 = moveBlock.createBlock36(moveBlock)</pre></li>
-                        <li><pre>            block36Queue.append(block36)</pre></li>
-                        <li><pre>    else:</pre></li>
-                        <li><pre>        // Do nothing, piston can't move</pre></li>
-                        <li><pre></pre></li>
+                        <li><pre>        blocksToMove.<span style='color:#ffeb3b'>append</span>(block)</pre></li>
+                        <li><pre>        <span style='color:#ffeb3b'>precheck</span>(block_in_front)</pre></li>
+                        <li><pre>    <span style='color:#2196f3'>else</span> <span style='color:#2196f3'>if</span> block == <span style='color:#d8721a'>"Air"</span>:</pre></li>
+                        <li><pre>        <span style='color:#2196f3'>return</span> <span style='color:#2196f3'>true</span></pre></li>
+                        <li><pre>    <span style='color:#2196f3'>if</span> <span style='color:#ffeb3b'>len</span>(blocksToMove) &gt; <span style='color:#4caf50'>12</span>:</pre></li>
+                        <li><pre>        canMove = <span style='color:#2196f3'>false</span></pre></li>
+                        <li><pre>    <span style='color:#2196f3'>return</span> <span style='color:#2196f3'>false</span></pre></li>
+                        <li><pre><span style='color:#2196f3'>function</span> <span style='color:#ffeb3b'>piston_powered</span>():</pre></li>
+                        <li><pre>    canMove = <span style='color:#ffeb3b'>precheck</span>(block_in_front_of_piston)</pre></li>
+                        <li><pre>    <span style='color:#2196f3'>if</span> canMove:</pre></li>
+                        <li><pre>        <span style='color:#2196f3'>while</span> blocksToMove <span style='color:#2196f3'>not</span> Empty:</pre></li>
+                        <li><pre>            moveBlock = <span style='color:#ffeb3b'>pop</span>(blocksToMove)</pre></li>
+                        <li><pre>            moveBlock.<span style='color:#ffeb3b'>Move_Forward</span>()</pre></li>
+                        <li><pre>            block36 = moveBlock.<span style='color:#ffeb3b'>createBlock36</span>(moveBlock)</pre></li>
+                        <li><pre>            block36Queue.<span style='color:#ffeb3b'>append</span>(block36)</pre></li>
+                        <li><pre>    <span style='color:#2196f3'>else</span>:</pre></li>
+                        <li><pre>        <span style='color:#9e9e9e'>// Do nothing, piston can't move</span></pre></li>
+                        <li><pre><span style='color:#9e9e9e'></span></pre></li>
                     </ul>
                 </p>
                 <p>
@@ -581,12 +574,12 @@
                 <p>
                     If written in pseduocode:
                     <ul class='ccode'>
-                        <li><pre>function piston_stop_moving():</pre></li>
-                        <li><pre>    loop through block36Queue -&gt; block36:</pre></li>
-                        <li><pre>        block = block36.getStoredBlock()</pre></li>
-                        <li><pre>        block36.destroy()</pre></li>
-                        <li><pre>        processEvent(block)</pre></li>
-                    </ul>
+                        <li><pre><span style='color:#2196f3'>function</span> <span style='color:#ffeb3b'>piston_stop_moving</span>():</pre></li>
+                        <li><pre>loop through block36Queue -&gt;<span style='color:#DAF7A6 '></span> block36:</pre></li>
+                        <li><pre>    block = block36.<span style='color:#ffeb3b'>getStoredBlock</span>()</pre></li>
+                        <li><pre>    block36.<span style='color:#ffeb3b'>destroy</span>()</pre></li>
+                        <li><pre>    <span style='color:#ffeb3b'>processEvent</span>(block)</pre></li>
+                        </ul>
                 </p>
 
                 <p>
