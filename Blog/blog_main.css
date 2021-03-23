@@ -5,7 +5,8 @@
 #category-desc {padding-left:5px;border-bottom:2px solid #636363;font-weight:normal;font-size:1em;padding-bottom:10px;}
 #tag-list-wrapper {width:20%;float:left;margin-left:5%;box-sizing:border-box;}
 #tag-list {list-style:none;padding-left:2px;font-weight:bold;padding:5px;}
-#tag-list > li {text-align: right;}
+#tag-list > li {text-align: right;border-bottom: 1px dashed black;padding: 15px 0;}
+#tag-list > li:last-child {border: none;}
 #tag-list > li > span {pointer-events:none;}
 #tag-list:hover {cursor:hand;}
 #contact-root {clear: both;}
