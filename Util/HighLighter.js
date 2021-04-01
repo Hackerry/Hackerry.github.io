@@ -1,9 +1,10 @@
 // Syntax Highlighter by Hackerry
 
 // Bug 1: 30*20 not highlighting digits
-// Bug 2: -100 is treated as pointer, missing - in division
-// Bug 3: / is treated as comment deliminator, missing / in division
-// Bug 4: </ causes infinite loop
+// Bug 2: -100 is treated as pointer
+// Bug 3: / is treated as comment deliminator
+// Bug 4: </ causes infinite loop (same reason as 3)
+// ^ Addressed
 
 var data = String.raw`<script>
     var fakeImage = document.createElement("img");
@@ -24,7 +25,7 @@ const KEYWORDS = [
     "alignas", "alignof", "and", "and_eq", "asm", "atomic_cancel", "atomic_commit", "atomic_noexcept", "bitand", "bitor", "bool", "char8_t", "char16_t", "char32_t", "compl", "concept", "consteval", "constexpr", "constinit", "const_cast", "co_await", "co_return", "co_yield", "decltype", "dynamic_cast", "explicit", "friend", "mutable", "namespace", "noexcept", "not", "not_eq", "nullptr", "operator", "or", "or_eq", "reflexpr", "reinterpret_cast", "requires", "short", "static_assert", "static_cast", "template", "thread_local", "typeid", "typename", "using", "virtual", "wchar_t", "xor", "xor_eq",
 ];
 
-const REG_DELIM = ["(", ")", ";", ":", "=", "<", ">", "+", "{", "}", "[", "]", "&", "|", "^", "%", " ", "\n", ","];
+const REG_DELIM = ["(", ")", ";", ":", "=", "<", ">", "+", "{", "}", "[", "]", "&", "|", "^", "%", " ", "\n", ",", "*"];
 const STR_DELIM = ["'", "\""];
 const ESC_DELIM = ["\\"];
 const COM_DELIM = ["/"];
@@ -56,15 +57,17 @@ function highlight(data, usedForBlog=false) {
     var i = 0;
     var dataLength = data.length;
     while(i < dataLength) {
-        if(data.charAt(i) === '/' && i+1 < dataLength) {
+        if(data.charAt(i) === '/') {
             //console.log("Comment starts at: " + i);
 
             // Test comment
             var isComment = false;
             var isMultiline = false;
             if(data.charAt(i+1) === '/') {
+                // Single line comment
                 isComment = true;
             } else if(data.charAt(i+1) === '*') {
+                // Multi-line comment
                 isComment = true;
                 isMultiline = true;
             }
@@ -88,6 +91,9 @@ function highlight(data, usedForBlog=false) {
                 // Hightlight last part
                 result += getHightLight(escapeSpecialChar(data.substring(startIdx, i+1)), COM_COLOR, usedForBlog);
                 //console.log("Comment highlighted: " + startIdx + "-" + i);
+            } else {
+                // Normal slash, do nothing and record it
+                result += data.charAt(i);
             }
             //console.log("Comment ends at: " + i);
         } else if(STR_DELIM.includes(data.charAt(i))) {
@@ -159,6 +165,9 @@ function highlight(data, usedForBlog=false) {
 
                 result += getHightLight(escapeSpecialChar(data.substring(startIdx, i)), PTR_COLOR, usedForBlog);
                 i--;
+            } else {
+                // Normal minus sign, do nothing and record it
+                result += data.charAt(i);
             }
 
             //console.log("Pointer check ends: " + startIdx + "-" + i);
