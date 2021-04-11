@@ -1,111 +1,185 @@
-<html>
-    <head>
-        <link rel='stylesheet' href='style.css'></link>
-        <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
-        <script src="https://kit.fontawesome.com/c9acfba105.js" crossorigin="anonymous"></script>
-    </head>
+<html><head>
+    
+    <link rel="shortcut icon" type="image/x-icon" href="./favicon.ico" />
+    <script src="https://kit.fontawesome.com/c9acfba105.js" crossorigin="anonymous"></script>
+    <script type='text/javascript'>
+        function gotop() {
+            document.body.scrollTop = 0;
+            document.documentElement.scrollTop = 0;
+        }
+    </script>
 
-    <body>
-        <nav id='nav-bar'>
-            <a href='hackerry.github.io'>Jiachen Niu</a>
-            <ul id='nav-link'>
-                <li><a href='#banner'>Home</a></li>
-                <li><a href='#project-root'>Projects</a></li>
-                <li><a href='Blog/Blog_Main.html'>Blog</a></li><!-- TODO add a home page for blog -->
-                <li><a href='#contact-root'>Contact</a></li>
-            </ul>
-        </nav>
+    
+    
+    <link rel='stylesheet' href='styles/toplevel.css' />
+    
+    <link rel='stylesheet' href='styles/index.css' />
+    
+    <link rel='stylesheet' href='styles/footerHeader.css' />
+    
+    <link rel='stylesheet' href='styles/cardDiv.css' />
+    
+</head><body>
 
-        <!-- Banner -->
-        <div id='banner'>
-            <div id='banner-text'>
-                <h1 id='welcome-text'>Welcome to my Homepage!</h1>
-            </div>
+<!-- Auto-generated navbar -->
+
+<nav id='nav-bar'>
+    <div id='content-bar'>
+        <a href="/">Jiachen Niu</a>
+        <div id='nav-link'>
+            <a href='./index.html'>Home</a>
+            <a href='./blog/index.html'>Blog</a>
+            <a href='./index.html#contact-root'>Contact</a>
         </div>
+    </div>
+</nav>
 
-        <!-- About Section -->
-        <div id='about-root'>
-            <div id='about-wrapper'>
-                <h1 id='about-header'>About</h1>
-                <div id='about-text'>
-                    <p id='about-para'>I'm currently an undergrad at University of California - San Diego,<br>
-                        with a major in Computer Science<br>(2017-2021).</p>
-                </div>
-                <div id='about-image'>
-                    <img src='Geisel.jpg' width='400' height='250'/>
-                    <p>Geisel Library, Oct. 21, 2017</p>
-                </div>
-            </div>
-        </div>
+<!-- Copied body -->
+<div id='content-root'>
+    <div id='banner'>
+        <h1 id='banner-title'>Welcome!</h1>
+        <p class='banner-description'>
+            Computer science major undergrduate and incoming graguate student at <b>UC San Diego</b>. Passionate about learning all things computer-related. Worked at <b>Oracle</b> as a corporate architecture intern in summer <b>2020</b>.
+        </p>
+        <p class='banner-description'>
+            I'm also a...
+        </p>
+        <ul id='banner-list'>
+            <li>
+                <span class='icon'><i class="fas fa-music"></i></span>beginning piano player (6 months)
+            </li>
+            <li>
+                <span class='icon'><i class="fas fa-gamepad"></i></span>mid-core gamer (mostly Minecraft)
+            </li>
+            <li>
+                <span class='icon'><i class="fas fa-atom"></i></span>former chemistry major (2 yrs)
+            </li>
+        </ul>
+        <p class='banner-description'>
+            and my focuses are operating systems, computer networks, web development and computer security.
+        </p>
+        <p id='resume-link'>
+            <a href='Resume_Jiachen_Niu.pdf'>Resume (updated Apr. 2021)</a>
+        </p>
+        <div id='banner-icon'></div>
+    </div>
 
-        <!-- Skill Section -->
-        <div id='skill-root'>
-            <div id='skill-box'>
-                <h1 id='skill-header'>Related Information</h1>
-                <ul id='skill-rating'>
-                    <li><span>Java</span><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star"></i></li>
-                    <li><span>C/C++</span><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i></li>
-                    <li><span>Python</span><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i></li>
-                    <li><span>JS/HTML/CSS</span><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i></li>
-                    <li><span>SQL</span><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i></li>
-                    <li><span>Android</span><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i></li>
-                    <li>
-                        <a href='Resume_Jiachen_Niu.pdf'>
-                            <div id='resume-box'>
-                                <div id='resume-header'>Resume</div>
-                                <i id='resume-icon' class="far fa-file"></i>
-                            </div>
-                        </a>
-                    </li>
-                </ul>
-            </div>
+    <div id='intro-div'>
+        <div id='project-div'>
+            <h1>Projects</h1>
+             
+<div class='card-div'>
+    <a href='https://github.com/Hackerry/Vocabulary_Tracker'>
+        <div>
+            <h2 class='card-div-title'>Vocabulary Tracker</h2>
+            <p class='card-div-text'>A language learner&#39;s vocabulary notebook. Search, manage and review new vocabularies.</p>
+            <p class='card-div-additionalText'>Read More...</p>
         </div>
+    </a>
+</div>
+  
+<div class='card-div'>
+    <a href='https://github.com/Hackerry/Simulators'>
+        <div>
+            <h2 class='card-div-title'>Graph Search Algo Simulator</h2>
+            <p class='card-div-text'>Visualize how 5 different graph search algorithms (Greedy, DFS, BFS, Dijkstra, A*) perform on finding the shortest path between two points in an edge weighted graph.</p>
+            <p class='card-div-additionalText'>Read More...</p>
+        </div>
+    </a>
+</div>
+ 
+            <a href='https://github.com/Hackerry' id='project-link'>More on Github<span class="icon"><i class="fas fa-chevron-right"></i></span></a>
+        </div>
+        <div id='tools-div'>
+            <h1>Tools</h1>
+             
+<div class='card-div'>
+    <a href='/blog/Write%20A%20Simple%20Syntax%20Highlighter.html'>
+        <div>
+            <h2 class='card-div-title'>Code Highlighter</h2>
+            <p class='card-div-text'>A simple all-purpose syntax highlighter. Hightlight common reserved keywords and other parameters.</p>
+            <p class='card-div-additionalText'>Explore</p>
+        </div>
+    </a>
+</div>
+  
+<div class='card-div'>
+    <a href='/blog/Make%20A%203D-Model%20Wireframe%20Viewer.html'>
+        <div>
+            <h2 class='card-div-title'>.OBJ 3D Model Wireframe Viewer</h2>
+            <p class='card-div-text'>A toy project that draws 3D models from .OBJ files.</p>
+            <p class='card-div-additionalText'>Explore</p>
+        </div>
+    </a>
+</div>
+ 
+        </div>
+    </div>
 
-        <!-- Project Section -->
-        <div id='project-root'>
-            <div id='project-wrapper'>
-                <h1 id='project-header'>Projects</h1>
-                <div id='project-list'>
-                    <a class='project' href='https://github.com/Hackerry/Simulators'>
-                        <div class='project-inner-wrapper'>
-                            <h1>Graph Search Simulator</h1>
-                            <p>
-                                JavaFX implemented Graph Search Simulator
-                            </p>
-                        </div>
-                    </a>
-                    <a class='project' href='https://github.com/Hackerry/Pictionary-Nodejs'>
-                        <div class='project-inner-wrapper'>
-                            <h1>Multiplayer Pictionary</h1>
-                            <p>
-                                Classic Pictionary game implemented in Node.js
-                            </p>
-                        </div>
-                    </a>
-                    <a class='project' href='https://github.com/Hackerry/Truth-Table-Generator'>
-                        <div class='project-inner-wrapper'>
-                            <h1>Truth Table Generator</h1>
-                            <p>
-                                Generate truth tables given logic expressions
-                            </p>
-                        </div>
-                    </a>
-                    <a class='project' href='https://github.com/Hackerry/TetrisBlockGameJavaFX'>
-                        <div class='project-inner-wrapper'>
-                            <h1>Tetris</h1>
-                            <p>
-                                A JavaFX implemented Tetris. Enjoy!
-                            </p>
-                        </div>
-                    </a>
-                </div>
-            </div>
+    <div id='blog-div'>
+        <h1>Recent Blogs</h1>
+        <div id='blog-cards'>
+             
+<div class='card-div'>
+    <a href='blog/Make%20A%203D-Model%20Wireframe%20Viewer.html'>
+        <div>
+            <h2 class='card-div-title'>Make A 3D-Model Wireframe Viewer</h2>
+            <p class='card-div-text'> The project started one Saturday morning when I suddenly had the idea of making a &#34;rotating cube...</p>
+            <p class='card-div-additionalText'></p>
         </div>
+    </a>
+</div>
+  
+<div class='card-div'>
+    <a href='blog/Write%20A%20Simple%20Syntax%20Highlighter.html'>
+        <div>
+            <h2 class='card-div-title'>Write A Simple Syntax Highlighter</h2>
+            <p class='card-div-text'> As those who took Cognitive Science class may know, people have two ways of doing visual search -...</p>
+            <p class='card-div-additionalText'></p>
+        </div>
+    </a>
+</div>
+  
+<div class='card-div'>
+    <a href='blog/Differences%20Between%20Windows%20and%20Linux.html'>
+        <div>
+            <h2 class='card-div-title'>Differences Between Windows and Linux</h2>
+            <p class='card-div-text'> As programmers, we&#39;ve definitely used Linux some time in our lives before. The switch from Windows...</p>
+            <p class='card-div-additionalText'></p>
+        </div>
+    </a>
+</div>
+  
+<div class='card-div'>
+    <a href='blog/Install%20Arch%20Linux%20on%20VirtualBox.html'>
+        <div>
+            <h2 class='card-div-title'>Install Arch Linux on VirtualBox</h2>
+            <p class='card-div-text'> People say Arch Linux is the ultimate Linux Distro for geeks. It&#39;s very customizable and has detailed...</p>
+            <p class='card-div-additionalText'></p>
+        </div>
+    </a>
+</div>
+  
+<div class='card-div'>
+    <a href='blog/Ubuntu%20on%20Docker%20-%20My%20New%20Dev%20Env.html'>
+        <div>
+            <h2 class='card-div-title'>Ubuntu on Docker - My New Development Environment</h2>
+            <p class='card-div-text'> For so long, I&#39;ve been searching for a convenient Linux development environment setup for doing my...</p>
+            <p class='card-div-additionalText'></p>
+        </div>
+    </a>
+</div>
+ 
+        </div>
+        <a href='/blog/index.html' id='blog-link'>Read More<span class="icon"><i class="fas fa-chevron-right"></i></span></a>
+    </div>
+</div>
 
-        <!-- Contact Section -->
-        <div id='contact-root'>
-            <p>Contact at: harrynjc@gmail.com</p>
-            <a href="https://github.com/Hackerry"><i class="fab fa-github"></i></a>
-        </div>
-    </body>
-</html>
+<!-- Auto-generated footer -->
+<div id='contact-root'>
+    <div id='contact-content'>
+        <a href="https://github.com/Hackerry"><i class="fab fa-github"></i></a>
+        <a href="https://www.linkedin.com/in/niu-j-ba2216194/"><i class="fab fa-linkedin-in"></i></a>
+        <a href="mailto:harrynjc@gmail.com"><i class="far fa-envelope"></i></a>
+    </div>
+</div></body></html>

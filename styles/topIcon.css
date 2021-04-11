@@ -1,0 +1,17 @@
+#top-icon {
+    position:sticky;
+    background-color: #636363;
+    width: 60px;
+    height: 60px;
+    text-align: center;
+    border: 10px;
+    padding-top: 10px;
+    box-sizing: border-box;
+    color:white;
+    border-radius: 0 5px 5px 0;
+    top: 60%;
+    left: 0;
+}
+#top-icon:hover {
+    cursor: pointer;
+}
