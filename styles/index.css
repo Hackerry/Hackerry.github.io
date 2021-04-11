@@ -1,0 +1,153 @@
+body {
+    background-color: #f3efe0;
+}
+
+h1 {
+    font-size: 2.4rem;
+    line-height: 6rem;
+    font-weight: 500;
+}
+
+#content-root {
+    width: 70%;
+    margin: 0 auto;
+}
+
+/* Banner styles */
+
+#banner {
+    margin: 100px 0 150px;
+    width: 90%;
+    position: relative;
+}
+
+#banner b {
+    font-weight: 400;
+}
+
+.banner-description {
+    line-height: 2rem;
+    font-size: 1.4rem;
+    width: 70%;
+    font-weight: 400;
+    display: inline-block;
+    font-family: 'Josefin Slab', serif;
+    margin: 20px 0;
+}
+
+#banner-list {
+    line-height: 2rem;
+    font-size: 1.4rem;
+    font-weight: 400;
+    margin: 20px 0;
+}
+
+#banner-list .icon {
+    font-size: 1rem;
+    display: inline-block;
+    width: 1.2rem;
+    color: #5476c1;
+    margin-right: 10px;
+}
+
+#banner-list li {
+    list-style: none;
+    font-family: 'Josefin Slab', serif;
+    margin: 0 10px 0 20px;
+}
+
+#resume-link {
+    margin: 30px 0;
+}
+
+#resume-link a {
+    color: black;
+    font-weight: 500;
+}
+
+#banner-icon {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    position: absolute;
+    top: 80px;
+    right: 0;
+    background-image: url("../Very_Serious_Selfie.jpg");
+    background-size: 200px 200px;
+}
+
+/* Banner styles end */
+
+/* Main intro div styles */
+
+#project-link, #tools-link, #blog-link {
+    text-decoration: none;
+    color: black;
+    display: block;
+    margin-top: 20px;
+}
+
+#intro-div {
+    width: 100%;
+    display: flex;
+    min-height: 700px;
+    align-items: baseline;
+}
+
+#project-div, #tools-div {
+    width: 50%;
+    display: inline-block;
+    box-sizing: border-box;
+}
+
+/* Project div styles*/
+
+#project-div {
+    padding: 0 50px 0 0;
+}
+
+#project-link .icon {
+    padding: 5px;
+    font-size: 0.9rem;
+}
+
+/* Project styles end */
+
+/* Technical styles */
+
+#tools-div {
+    padding: 50px 0 0 0;
+}
+
+#tools-link .icon {
+    padding: 5px;
+    font-size: 0.9rem;
+}
+
+/* Technical styles end */
+
+/* Blog section styles */
+
+#blog-div {
+    margin-bottom: 200px;
+}
+
+#blog-cards {
+    display: flex;
+    margin-top: 20px;
+}
+
+#blog-cards > .card-div {
+    width: 20%;
+    padding: 0 10px;
+}
+
+#blog-cards > .card-div:first-child {
+    padding-left: 0;
+}
+
+#blog-cards > .card-div:last-child {
+    padding-right: 0;
+}
+
+/* Blog section styles end */

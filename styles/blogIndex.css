@@ -1,0 +1,18 @@
+body {background-color:#f3efe0;}
+#content-wrapper {width:100%;margin:50px auto;}
+#content {width:30%;min-height:100%;margin:0 auto;}
+#blog-list {text-decoration:none;list-style:none;margin-top:50px;}
+#category-title {font-size:2.3rem;line-height:2rem;font-weight:300;display: inline-block;}
+#category-desc {font-size:1.2rem;line-height:2rem;font-weight:500;font-family: 'Josefin Slab', serif;display:inline-block;margin:20px 0 20px 20px;}
+#tag-list {list-style:none;font-weight:bold;display:inline-block;margin-bottom:10px;}
+#tag-list > li {font-weight:300;display:inline-block;padding:5px 10px;background-color:#636363;color:white;border-radius:5px;margin:5px;}
+#tag-list > li:first-child {margin-left:0;}
+#tag-list > li:last-child {border: none;}
+#tag-list > li > span {pointer-events:none;}
+#tag-list:hover {cursor:hand;}
+.entry {margin-bottom:30px;padding-bottom:20px;}
+.entry:last-child {border-bottom:none;margin-bottom:200px;}
+#blog-list a {color:black;font-size:1.6rem;font-weight:400;text-decoration:none;line-height:2.2rem;margin:20px 0;padding-bottom:20px;}
+.title-div {display:inline-block;}
+.post-date {font-family: 'Josefin Slab', serif;line-height:2.2rem;font-weight:500;display:inline-block;margin-left:10px;line-height:2.2rem;}
+.post-overview {font-weight:300;line-height:1.6rem;}
