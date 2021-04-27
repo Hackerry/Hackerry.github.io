@@ -1,0 +1,230 @@
+<html><head>
+    
+    <link rel="shortcut icon" type="image/x-icon" href="../favicon.ico" />
+    <script src="https://kit.fontawesome.com/c9acfba105.js" crossorigin="anonymous"></script>
+    <script type='text/javascript'>
+        function gotop() {
+            document.body.scrollTop = 0;
+            document.documentElement.scrollTop = 0;
+        }
+    </script>
+
+    
+    
+    <link rel='stylesheet' href='../styles/toplevel.css' />
+    
+    <link rel='stylesheet' href='../styles/footerHeader.css' />
+    
+    <link rel='stylesheet' href='../styles/post.css' />
+    
+</head><body>
+
+<!-- Auto-generated navbar -->
+
+<nav id='nav-bar'>
+    <div id='content-bar'>
+        <a href="/">Jiachen Niu</a>
+        <div id='nav-link'>
+            <a href='../index.html'>Home</a>
+            <a href='../blog/index.html'>Blog</a>
+            <a href='../index.html#contact-root'>Contact</a>
+        </div>
+    </div>
+</nav>
+
+<!-- Copied body -->
+
+
+<div id='content-wrapper'>
+    <div id='content' style='width:750px;'>
+        <h1>Algo 1 - KMP Algorithm</h1>
+        <p id='content-date'>Apr. 26, 2021, 19:45:44</p>
+        
+        <p>
+            Algorithms - I love it, I hate it and I can't escape from it. I'm not the kind of person who can crank a never-seen-before algorithm problem in half a hour during an interview. If I don't know the answer, I'll most likely have a hard time coming up with one on the spot. For me, seeing a lot of algorithms is the only way to prepare myself for interviews.
+        </p>
+        <p>
+            I intend to write a few tricky algorithms that I learned in the past in the upcoming posts. I hope by doing so I can better understand them and maybe help whoever reads this post with some of my personal insights.
+        </p>
+
+        <h2>Question to Solve</h2>
+        <p>
+            KMP solves the problem of finding a substring in another string. Different from the brute-force algorithm which needs to fall back all the way to the beginning of the substring to start a new match, KMP tries to fall back only to the character where additional comparisons are needed.
+        </p>
+        <p>
+
+        </p>
+
+        <h2>Concept - DFA</h2>
+        <p>
+            KMP constructs DFA (<b>D</b>eterministic <b>F</b>inite <b>A</b>utomaton) from the pattern string to 1) find matching substrings, and 2) store fallback points in case of character mismatches.
+        </p>
+        <div class='img-txt'>
+            <img src='../imgs/KMP-1.png' />
+        </div>
+        <p>
+            As an example, this is a DFA that matches on the substring <icode>aba</icode> in an alphabet containing only characters <icode>a</icode> and <icode>b</icode>. Each circle represents a state and each edge represents a transition.
+        </p>
+        <p>
+            The <icode>q0</icode> state is the starting state (marked by a triangle) and the <icode>q3</icode> state is the end state (marked by a double circle). If we can follow the given transitions from <icode>q0</icode> to <icode>q3</icode>, then we are sure we've found a valid substring <icode>aba</icode>.
+        </p>
+        <p>
+            The transitions are marked with characters in the alphabet, namely that contains only <icode>{a,b}</icode>. We must follow the transitions with the characters in the string to progress.
+        </p>
+        <p>
+            To illustrate, if the matching string is "<icode>abbaba</icode>", our state transition sequence would be <icode>q0 -a-> q1 -b-> q2 -b-> q0 -a-> q1 -b-> q2 -a-> q3</icode>. Since we end up in the end state <icode>q3</icode>, we know there is a valid substring <icode>aba</icode> in the matching string.
+        </p>
+        <p>
+            Since I'll focus on the application of DFA here, please feel free to read more about DFA elsewhere (ie. <a href='https://en.wikipedia.org/wiki/Deterministic_finite_automaton'>Wikipedia</a>).
+        </p>
+
+        <h2>Steps</h2>
+        <p>
+            The first step of KMP algorithm is to construct a DFA just like the one above.
+        </p>
+        <p>
+            To represent such a DFA, we use a 2D array. The rows are all the characters in the alphabet and the columns are all the states (as in image). The arrows represent the transitions of states - for example, if we are on state 0 and we encounter a <icode>a</icode>, we will move to state 1.
+        </p>
+        <div class='img-txt'>
+            <img src='../imgs/KMP-2.png' />
+        </div>
+        <p>
+            With this DFA in place, our next step is to simply feed the matching string into it and follow the transitions. This is as simple as keeping the index of the current state and following the transitions as encoded in the 2D array until we reach the end state, as the blue arrows show; or until we run out of characters in the matching string.
+        </p>
+
+        <h2>Core Step and Breakdown</h2>
+        <p>
+            The important step of this algorithm is the construction of the DFA. I find it easy for me to understand this process as containing two sub-steps.
+        </p>
+
+        <h3>Happy Path</h3>
+        <p>
+            The first sub-step is to construct the "happy path" through which the DFA detects a match. We do so by keeping a <icode>current</icode> pointer/index to the current state and set the next character in the pattern to point to the next state in the 2D array. As code speaks more than a thousand words:
+        </p>
+        <ul class='ccode'><li><pre>String pattern = <span style='color:#d8721a'>"aba"</span>;</pre></li><li><pre><span style='color:#2196f3'>int</span> S = pattern.<span style='color:#ffeb3b'>length</span>();</pre></li><li><pre><span style='color:#2196f3'>int</span> A = <span style='color:#d8721a'>"ab"</span>.<span style='color:#ffeb3b'>length</span>();</pre></li><li><pre></pre></li><li><pre><span style='color:#2196f3'>int</span>[][] dfa = <span style='color:#2196f3'>new</span> <span style='color:#2196f3'>int</span>[A][S];</pre></li><li><pre></pre></li><li><pre><span style='color:#2196f3'>for</span>(<span style='color:#2196f3'>int</span> i = <span style='color:#4caf50'>0</span>; i &lt; S; i++)</pre></li><li><pre>  dfa[pattern.<span style='color:#ffeb3b'>charAt</span>(i)][i] = i+<span style='color:#4caf50'>1</span>;</pre></li></ul>
+        <div class='img-txt'>
+            <img src='../imgs/KMP-3.png' />
+        </div>
+
+        
+        <h3>Fallback Path</h3>
+        <p>
+            The second, more complicated, sub-step is to store the fall-back points/indices for the DFA in case of mismatches.
+        </p>
+        <p>
+            Let's start with the brute-force algorithm and see how it can transform into KMP. As a reference, whenever there's a mismatch, brute-force algorithm falls back to the starting position and starts comparing the next character in the matching string.
+        </p>
+        <div class='img-txt'>
+            <img src='../imgs/KMP-4.png' />
+        </div>
+        <p>
+            Brute-force is inefficient because in the next iteration after the fall-back, it is comparing characters that have already been compared in the previous iteration (marked in blue).
+        </p>
+        <p>
+            What if we can simultaneously compare 2 iterations at once? Recall KMP uses DFA to compare strings by simply feeding input into it. Imagine we have the DFA we want to construct already here:
+        </p>
+        <div class='img-txt'>
+            <img src='../imgs/KMP-1.png' />
+        </div>
+        <p>
+            We also add another pointer - <icode>fallback</icode> to keep track of the section iteration. <icode>current</icode> is initially set at <icode>q1</icode> and <icode>fallback</icode> is set at <icode>q0</icode>.
+        </p>
+        <p>
+            Now we feed the input (<b>excluding the initial character</b>) into this DFA and update the pointers accordingly.
+        </p>
+        <div class='img-txt'>
+            <img src='../imgs/KMP-5.png' />
+        </div>
+        <p>
+            You can reason yourself we've just simulated 2 iterations of comparing the pattern with the matching string, with the second iteration comparing the substring (ie. <icode>bbaba</icode>) one character short of the input string (ie. <icode>abbaba</icode>). More importantly, the <icode>fallback</icode> pointer keeps track of the fallback point which we can use to generate those fall back positions for the DFA.
+        </p>
+        <p>
+            As a step by step illustratation of constructing the whole DFA:
+        </p>
+        <div class='img-txt'>
+            <img src='../imgs/KMP-6.png' />
+        </div>
+        <p>
+            Different componenets are colored differently:
+        </p>
+        <p>The "happy path" is colored red and it's what we constructed in substep 1.</p>
+        <p>The 2 pointers, <icode>current</icode> and <icode>fallback</icode>, are colored in blue and green respectively.</p>
+        <p>
+            The brown transitions are fallback transitions. They start at the current state and ends in the state which the fallback state would go to when following that transition.
+        </p>
+        <p>
+            For example, initially <icode>current -> q1</icode> and <icode>fallback -> q0</icode>. To construct the fallback path for <icode>q1</icode>, we observe that from the <icode>fallback</icode> state <icode>q0</icode>, if we follow the transiton <icode>a</icode>, we would go to <icode>q1</icode>. So the fallback transition should be from <icode>q1</icode> to itself.
+        </p>
+        
+        <h2>Code</h2>
+        <p>
+            Now for the final construction code (adapted from "Algorithms" book <a href='https://algs4.cs.princeton.edu/53substring/KMP.java.html'>here</a>) with added comments:
+        </p>
+        <ul class='ccode'><li><pre>String pattern = <span style='color:#d8721a'>"aba"</span>;</pre></li><li><pre></pre></li><li><pre><span style='color:#2196f3'>int</span> S = pattern.<span style='color:#ffeb3b'>length</span>();</pre></li><li><pre><span style='color:#2196f3'>int</span> A = <span style='color:#d8721a'>"ab"</span>.<span style='color:#ffeb3b'>length</span>();</pre></li><li><pre></pre></li><li><pre><span style='color:#2196f3'>int</span>[][] dfa = <span style='color:#2196f3'>new</span> <span style='color:#2196f3'>int</span>[A][S];</pre></li><li><pre></pre></li><li><pre><span style='color:#9e9e9e'>// current &amp; fallback pointer set at state 1 &amp; 0</span></pre></li><li><pre><span style='color:#9e9e9e'></span><span style='color:#2196f3'>int</span> curr = <span style='color:#4caf50'>1</span>, fall = <span style='color:#4caf50'>0</span>;</pre></li><li><pre></pre></li><li><pre><span style='color:#9e9e9e'>// Initial transitions</span></pre></li><li><pre><span style='color:#9e9e9e'></span>dfa[pattern.<span style='color:#ffeb3b'>charAt</span>(<span style='color:#4caf50'>0</span>)-<span style='color:#d8721a'>'a'</span>][<span style='color:#4caf50'>0</span>] = <span style='color:#4caf50'>1</span>;</pre></li><li><pre></pre></li><li><pre><span style='color:#9e9e9e'>// Construction step</span></pre></li><li><pre><span style='color:#9e9e9e'></span><span style='color:#2196f3'>for</span> (; curr &lt; S; curr++) {</pre></li><li><pre>    <span style='color:#9e9e9e'>// Loop through alphabet to generate all fallback transitions</span></pre></li><li><pre><span style='color:#9e9e9e'></span>    <span style='color:#2196f3'>for</span> (<span style='color:#2196f3'>int</span> a = <span style='color:#4caf50'>0</span>; a &lt; A; a++) {</pre></li><li><pre>        <span style='color:#9e9e9e'>// Construct fallback transitions</span></pre></li><li><pre><span style='color:#9e9e9e'></span>        dfa[a][curr] = dfa[a][fall];</pre></li><li><pre>    }</pre></li><li><pre></pre></li><li><pre>    <span style='color:#9e9e9e'>// "happy path" or matched case</span></pre></li><li><pre><span style='color:#9e9e9e'></span>    dfa[pattern.<span style='color:#ffeb3b'>charAt</span>(curr)-<span style='color:#d8721a'>'a'</span>][curr] = curr + <span style='color:#4caf50'>1</span>;</pre></li><li><pre></pre></li><li><pre>    <span style='color:#9e9e9e'>// Take input and update fallback pointer</span></pre></li><li><pre><span style='color:#9e9e9e'></span>    fall = dfa[pattern.<span style='color:#ffeb3b'>charAt</span>(curr)-<span style='color:#d8721a'>'a'</span>][fall];</pre></li><li><pre>}</pre></li></ul>
+
+        <h2>Performance Analysis</h2>
+        <h3>Runtime O(M+N)</h3>
+        <p>
+            The runtime is linear. <icode>M</icode> is the pattern length and <icode>N</icode> is the matching string length.
+        </p>
+        <h3>Space O(M)</h3>
+        <p>
+            Most of the space is used for storing the DFA, which grows as the pattern length grows.
+        </p>
+
+        <h3>Useful Links/References:</h3>
+        <p>
+            <a href='https://algs4.cs.princeton.edu/53substring/KMP.java.html'>KMP Algorithm - "Algorithms", Princeton</a><br>
+            <a href='https://www.geeksforgeeks.org/kmp-algorithm-for-pattern-searching'>KMP Algorithm - geeksforgeeks</a><br>
+            <a href='https://en.wikipedia.org/wiki/Knuth%E2%80%93Morris%E2%80%93Pratt_algorithm'>KMP Algorithm - Wikipedia</a><br>
+        </p>
+    </div>
+
+    <script>
+        const ALPHABET_SIZE = 26;
+        const BASE = "a".charCodeAt(0);
+
+        function constructDFA(pattern) {
+            var size = pattern.length;
+            var dfa = new Array(ALPHABET_SIZE).fill(0).map(() => new Array(size).fill(0));
+
+            dfa[pattern.charCodeAt(0) - BASE][0] = 1;
+            for(var X = 0, j = 1; j < size; j++) {
+                for(var c = 0; c < ALPHABET_SIZE; c++) {
+                    dfa[c][j] = dfa[c][X];
+                }
+
+                dfa[pattern.charCodeAt(j)-BASE][j] = j+1;
+                X = dfa[pattern.charCodeAt(j)-BASE][X];
+            }
+
+            console.log(dfa);
+
+            return dfa;
+        }
+
+        function findSubString(input, pattern) {
+            var N = input.length;
+            var P = pattern.length;
+            if(N == 0) return -1;
+            if(P == 0) return 0;
+
+            var dfa = constructDFA(pattern);
+            for(var i = 0, currState = 0; i < N && currState < P; i++) {
+                currState = dfa[input.charCodeAt(i)-BASE][currState];
+            }
+
+            if(currState == P) return i-P;
+            else return -1;
+        }
+    </script>
+</div>
+
+<!-- Auto-generated footer -->
+<div id='contact-root'>
+    <div id='contact-content'>
+        <a href="https://github.com/Hackerry"><i class="fab fa-github"></i></a>
+        <a href="https://www.linkedin.com/in/niu-j-ba2216194/"><i class="fab fa-linkedin-in"></i></a>
+        <a href="mailto:harrynjc@gmail.com"><i class="far fa-envelope"></i></a>
+    </div>
+</div></body></html>
