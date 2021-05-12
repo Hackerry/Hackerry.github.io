@@ -1,0 +1,145 @@
+<html><head>
+    
+    <link rel="shortcut icon" type="image/x-icon" href="../favicon.ico" />
+    <script src="https://kit.fontawesome.com/c9acfba105.js" crossorigin="anonymous"></script>
+    <script type='text/javascript'>
+        function gotop() {
+            document.body.scrollTop = 0;
+            document.documentElement.scrollTop = 0;
+        }
+    </script>
+
+    
+    
+    <link rel='stylesheet' href='../styles/toplevel.css' />
+    
+    <link rel='stylesheet' href='../styles/footerHeader.css' />
+    
+    <link rel='stylesheet' href='../styles/post.css' />
+    
+</head><body>
+
+<!-- Auto-generated navbar -->
+
+<nav id='nav-bar'>
+    <div id='content-bar'>
+        <a href="/">Jiachen Niu</a>
+        <div id='nav-link'>
+            <a href='../index.html'>Home</a>
+            <a href='../blog/index.html'>Blog</a>
+            <a href='../index.html#contact-root'>Contact</a>
+        </div>
+    </div>
+</nav>
+
+<!-- Copied body -->
+
+
+<div id='content-wrapper'>
+    <div id='content' style='width:750px;'>
+        <h1>Algo 2 - Coin Change Problem & DP</h1>
+        <p id='content-date'>May. 11, 2021, 22:43:22</p>
+        
+        <p>
+            Next, we look at DP algorithms in the context of a specific question - "Coin Change" from <a href='https://leetcode.com/problems/coin-change/'>Leetcode</a>.
+        </p>
+
+        <h2>Problem Description</h2>
+        <p>
+            Given a set of coins with distinct dollar amounts (ie. <icode>Cm = [1,2,5,10,50,...]</icode>) and a total amount (ie. <icode>A = 120</icode>), find the minimum number of coins to make up that amount <icode>A</icode> (ie. in this example, we need a minimum of 4 coins: 120=50+50+10+10).
+        </p>
+
+        <h2>Caveat</h2>
+        <p>
+            It's tempting to devise an algorithm that tries to use the coin with the highest dollar amount as many times as possible. However, this is not always optimal.
+        </p>
+        <p>
+            As a simple example, if we are given the set of coins <icode>Cm = [1,5,10,11]</icode> and we want to make up an amount of <icode>A = 20</icode>, the optimal solution would be to use 2 coins of <icode>20</icode>. The solution using 1 coin of <icode>11</icode> would yield a less optimal one (ie. <icode>11+5+1+1+1+1</icode>).
+        </p>
+        <p>
+            Mathematically, if there is any coin <icode>X<sub>i+1</sub> &isin; [X<sub>1</sub>, X<sub>2</sub>, ... X<sub>n</sub>] = Cm</icode> that is smaller than <icode>2X<sub>i</sub></icode>, the previous algorithm doesn't gurantee an optimal solution.
+        </p>
+        <p>
+            To prove it, assume <icode>X<sub>i+1</sub> = X<sub>i</sub> + W</icode> where <icode>W &lt; X<sub>i</sub></icode> by definition. If we were to make up for the amount <icode>A = 2X<sub>i</sub></icode>, the optimal solution would be to use 2 coins of amount <icode>X<sub>i</sub></icode>. Using 1 coin with amount <icode>X<sub>i+1</sub></icode> would mean we need at least another coin that makes up the amount <icode>X<sub>i</sub>-W</icode>. So the latter solution would be at best as good as the optimal solution, but sometimes it doesn't.
+        </p>
+        <p>
+            Because real dollar bills have fixed amounts and they grow (roughly) exponentially (ie. 1, 5, 10, 20, 50, 100, etc), so this previous algorithm works well in real life.
+        </p>
+
+        <h2>Dynamic Programming (DP) Steps</h2>
+        <p>
+            I think it's easy for me to approache any DP problems by following these two steps:
+        </p>
+        <ul>
+            <li>Define subproblem from the original one</li>
+            <li>Construct 1D/2D/3D array/matrix to solve the set of subproblems</li>
+        </ul>
+
+        <h2>Define A Subproblem</h2>
+        <p>
+            The subproblem often is defined by <b>copying</b> the original problem but <b>restricting</b> one of the given conditions to a more limited one.
+        </p>
+        <p>
+            For example, in this "Coin Change" problem, there are 2 conditions given originally - the coins <icode>Cm</icode> and the total amount <icode>A</icode>. We can restrict on either of them.
+        </p>
+        <br>
+        <br>
+        <p>
+            If we restrict the coins used, we can define the subproblem as: find the minimum number of coins to make up for amount <icode>A</icode> using a subset of the coins in <icode>Cm</icode>. Most likely that subset would be the resulting coins after taking one coin out, namely the subset is <icode>Cm' = [X<sub>1</sub>, X<sub>2</sub>, ... X<sub>n-1</sub>]</icode>.
+        </p>
+        <p>
+            This way of defining the subproblem can lead to a valid solution, but the final algorithm is less efficient compared to the second definition, because it has a larger search space, namely <b>all possible total amounts</b> that can be made up from the given coins (maybe with an additional condition being the amount must be smaller than the given <icode>A</icode>).
+        </p>
+        <br>
+        <br>
+        <p>
+            If we choose the second definition, our subproblem is: find the minimum number of coins to make up for amount <icode>A'</icode> where <icode>A'</icode> is gradually decreasing by <icode>1</icode> every iteration.
+        </p>
+        <p>
+            The algorithm for this definition would go through a much smaller search space, which <b>grows with the amount</b> <icode>A</icode> rather than that grows exponentially with the number of coins.
+        </p>
+
+        <p>
+            For more complicated DP problems, there could be more conditions which means choosing which conditions to restrict and in what order they are used is crucial.
+        </p>
+
+        <h2>Construct 1D/2D/3D Array/Matrix</h2>
+        <p>
+            With the subproblem defined, the next step is to layout the <b>scratch space</b> for calculations. The <b>condition(s) we choose to restrict on</b> become(s) the <b>dimension(s) of the scratch space</b>. Depending on how many conditions are there, the scratch space could be 1D, 2D or 3D.
+        </p>
+        <br>
+        <p>
+            For this problem, because we only restrict one condition (ie. total amount), the scratch space is 1D. So we initial an array of size <icode>A</icode>.
+        </p>
+        <p>
+            For the calculation part, we need to <b>loop through the dimension(s)</b> and keep <b>enlarging the condition(s)</b> until we've restored the original problem.
+        </p>
+        <br>
+        <p>
+            The main selling point of DP is its ability to <b>keep track of past calculations and reuse them for later calculations</b> (limited backtrack steps). The link between current and past calculation is often the other condition that we don't restrict on.
+        </p>
+        <p>
+            In this case, as <icode>A'</icode> increases, the new calculations use coins in <icode>Cm</icode> as the bridge to connect to past results. To be more specific, to find the minimum number of coins to make up amount <icode>A'</icode>, we reuse past results of <icode>A'-X<sub>1</sub></icode>, <icode>A'-X<sub>2</sub></icode>...
+        </p>
+        <p>
+            After the calculation is done, the scratch space is populated with values and the final result is at the <b>last index of all dimensions</b>.
+        </p>
+
+        <h2>My Answer Code</h2>
+        <ul class='ccode'><li><pre><span style='color:#2196f3'>public</span> <span style='color:#2196f3'>int</span> <span style='color:#ffeb3b'>coinChange1</span>(<span style='color:#2196f3'>int</span>[] coins, <span style='color:#2196f3'>int</span> amount) {</pre></li><li><pre>    <span style='color:#9e9e9e'>// Edge case check</span></pre></li><li><pre><span style='color:#9e9e9e'></span>    <span style='color:#2196f3'>if</span>(amount == <span style='color:#4caf50'>0</span>) <span style='color:#2196f3'>return</span> <span style='color:#4caf50'>0</span>;</pre></li><li><pre></pre></li><li><pre>    <span style='color:#9e9e9e'>// Scratch space</span></pre></li><li><pre><span style='color:#9e9e9e'></span>    <span style='color:#2196f3'>int</span>[] values = <span style='color:#2196f3'>new</span> <span style='color:#2196f3'>int</span>[amount+<span style='color:#4caf50'>1</span>];</pre></li><li><pre></pre></li><li><pre>    <span style='color:#9e9e9e'>// Loop through the restricted dimension</span></pre></li><li><pre><span style='color:#9e9e9e'></span>    <span style='color:#2196f3'>for</span>(<span style='color:#2196f3'>int</span> i = <span style='color:#4caf50'>0</span>; i &lt; values.length; i++) {</pre></li><li><pre>        <span style='color:#2196f3'>int</span> minNum = Integer.MAX_VALUE;</pre></li><li><pre></pre></li><li><pre>        <span style='color:#2196f3'>int</span> lastCoinNum;</pre></li><li><pre>        <span style='color:#2196f3'>for</span>(<span style='color:#2196f3'>int</span> j = <span style='color:#4caf50'>0</span>; j &lt; coins.length; j++) {</pre></li><li><pre>            <span style='color:#9e9e9e'>// Calculate new subproblem results from past results</span></pre></li><li><pre><span style='color:#9e9e9e'></span>            <span style='color:#2196f3'>if</span>(coins[j] &lt;= amount &amp;&amp; i-coins[j] &gt;= <span style='color:#4caf50'>0</span>) {</pre></li><li><pre>                lastCoinNum = values[i - coins[j]];</pre></li><li><pre>                <span style='color:#2196f3'>if</span>(lastCoinNum != <span style='color:#4caf50'>0</span>) {</pre></li><li><pre>                    minNum = Math.<span style='color:#ffeb3b'>min</span>(minNum, lastCoinNum+<span style='color:#4caf50'>1</span>);</pre></li><li><pre>                } <span style='color:#2196f3'>else</span> <span style='color:#2196f3'>if</span>(coins[j] == i) {</pre></li><li><pre>                    minNum = <span style='color:#4caf50'>1</span>;</pre></li><li><pre>                }   </pre></li><li><pre>            }</pre></li><li><pre>        }</pre></li><li><pre></pre></li><li><pre>        <span style='color:#9e9e9e'>// Update new result</span></pre></li><li><pre><span style='color:#9e9e9e'></span>        <span style='color:#2196f3'>if</span>(minNum != Integer.MAX_VALUE) values[i] = minNum;</pre></li><li><pre>    }</pre></li><li><pre></pre></li><li><pre>    <span style='color:#2196f3'>return</span> values[amount] == 0? -<span style='color:#4caf50'>1</span>: values[amount];</pre></li><li><pre>}</pre></li></ul>
+
+        <h3>Useful Links/References:</h3>
+        <p>
+            <a href='https://leetcode.com/problems/coin-change/'>Coin Change - Leetcode</a><br>
+        </p>
+    </div>
+</div>
+
+<!-- Auto-generated footer -->
+<div id='contact-root'>
+    <div id='contact-content'>
+        <a href="https://github.com/Hackerry"><i class="fab fa-github"></i></a>
+        <a href="https://www.linkedin.com/in/niu-j-ba2216194/"><i class="fab fa-linkedin-in"></i></a>
+        <a href="mailto:harrynjc@gmail.com"><i class="far fa-envelope"></i></a>
+    </div>
+</div></body></html>
