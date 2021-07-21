@@ -1,0 +1,184 @@
+<html><head>
+    
+    <link rel="shortcut icon" type="image/x-icon" href="../favicon.ico" />
+    <script src="https://kit.fontawesome.com/c9acfba105.js" crossorigin="anonymous"></script>
+    <script type='text/javascript'>
+        function gotop() {
+            document.body.scrollTop = 0;
+            document.documentElement.scrollTop = 0;
+        }
+    </script>
+
+    
+    
+    <link rel='stylesheet' href='../styles/toplevel.css' />
+    
+    <link rel='stylesheet' href='../styles/footerHeader.css' />
+    
+    <link rel='stylesheet' href='../styles/post.css' />
+    
+</head><body>
+
+<!-- Auto-generated navbar -->
+
+<nav id='nav-bar'>
+    <div id='content-bar'>
+        <a href="/">Jiachen Niu</a>
+        <div id='nav-link'>
+            <a href='../index.html'>Home</a>
+            <a href='../blog/index.html'>Blog</a>
+            <a href='../index.html#contact-root'>Contact</a>
+        </div>
+    </div>
+</nav>
+
+<!-- Copied body -->
+
+
+ 
+<style>
+    table {
+        border-collapse: collapse;
+    }
+    table td {
+        width: 50px;
+        height: 50px;
+        font-weight: bold;
+        display: inline-block;
+        line-height: 50px;
+        border: 1px solid #646464;
+    }
+    .green {
+        background-color: #4caf50;
+        color: white;
+    }
+    .red {
+        background-color: #f44336;
+        color: white;
+    }
+    .brown {
+        background-color: #795548;
+        color: white;
+    }
+    .cyan {
+        background-color: #009688;
+        color: white;
+    }
+    .light-green {
+        background-color: #8bc34a;
+        color: white;
+    }
+    .unl {
+        text-decoration: underline;
+    }
+</style>
+ 
+<div id='content-wrapper'>
+    <div id='content' style='width:750px;'>
+        <h1>Algo 3 - Pathfinding</h1>
+        <p id='content-date'>Jul. 21, 2021, 10:48:20</p>
+        
+        <p>
+            I learned many pathfinding algorithms in the past but my focus was always on how they differ from each other and their shortcomings. For example, BFS and DFS work only on "grid-like" graphs with equal edge weight between any adjacent pair of nodes. Dijkstra and A* are more powerful but they don't work on graphs with negative edge weights. Bellman-Ford changes Dijkstra's greedy/unbounded relaxation process with bounded <icode>|V|</icode> times of relaxation, thus preventing falling into infinite negative cycles that break Dijkstra. However, Bellman-Ford doesn't work on undirected graphs and <a href='https://cs.stackexchange.com/a/76879'>more complicated algorithms</a> are needed.
+        </p>
+ 
+        <br>
+        <br>
+        <p>
+            Asking the differences between those algorithms makes a great exam or interview question, but their similarities are also important. There is a common idea behind all those algorithms that once realized can be applied to device new pathfinding algorithms. For example, BFS/DFS can find the minimum path between two points on a grid. What if now I want to modify BFS/DFS to find the path <b>with minimum turns</b> (ie. left, right, up, down) between two points on a 2D grid?
+        </p>
+        <p>
+            <i>Fun Fact: I came up with this question while playing a pixel RPG game. The AIs move in a strict corner-to-corner fashion (ie. typical BFS/DFS behavior) which looks really rigid:</i>
+            <table>
+                <tr><td class='brown'>&rarr;</td><td class='green'>&darr;</td><td class='red'>X</td><td class='red'>X</td><td class='red'>X</td></tr>
+                <tr><td>-</td><td class='green'>&rarr;</td><td class='green'>&darr;</td><td class='red'>X</td><td class='red'>X</td></tr>
+                <tr><td>-</td><td>-</td><td class='green'>&rarr;</td><td class='green'>&darr;</td><td class='red'>X</td></tr>
+                <tr><td>-</td><td>-</td><td>-</td><td class='green'>&rarr;</td><td class='brown'>&loz;</td></tr>
+            </table>
+            <i>More natural behavior:</i>
+            <table>
+                <tr><td class='brown'>&darr;</td><td>-</td><td class='red'>X</td><td class='red'>X</td><td class='red'>X</td></tr>
+                <tr><td class='green'>&darr;</td><td>-</td><td>-</td><td class='red'>X</td><td class='red'>X</td></tr>
+                <tr><td class='green'>&darr;</td><td>-</td><td>-</td><td>-</td><td class='red'>X</td></tr>
+                <tr><td class='green'>&rarr;</td><td class='green'>&rarr;</td><td class='green'>&rarr;</td><td class='green'>&rarr;</td><td class='brown'>&loz;</td></tr>
+            </table>
+        </p>
+ 
+        <h2>The Common Idea - Minimum Path</h2>
+        <p>
+            All those common pathfinding algorithms mentioned earlier (ie. BFS, DFS, Dijkstra, A*) aim to solve the question of finding the shortest path between two points.
+        </p>
+        <p>
+            To do so, they start from the starting point and gradually build paths by exploring one more node ahead on each path until the ending point is explored. The correctness of those algorithms is ensured by exploring each path in the order of increasing path length, which is the aspect of a path that we want to minimize.
+        </p>
+        <p>
+            In DFS/BFS, the first 4 nodes (no diagonal moves allowed) added have the path length of 1 while the next 4 have a path length of 2, etc... In Dijkstra and A*, this path length order is also maintained - if path A is shorter than path B, then path A is guaranteed to be inspected and explored before path B.
+        </p>
+        <p>
+            Given this idea, the problem of finding the path between two points with minimum turns on a 2D grid is very easy. We can modify BFS/DFS to explore paths in the order of increasing number of turns in that path, the aspect of a path which we now care about. Nodes that can be reached from the starting point with 1 turn are explored first, then nodes with 2 turns, etc...
+        </p>
+        <p>
+            <i>BFS</i>
+            <table>
+                <tr><td class='light-green'>3</td><td class='green'>2</td><td class='green'>2</td><td class='green'>2</td><td class='light-green'>3</td></tr>
+                <tr><td class='light-green'>3</td><td class='green'>2</td><td class='cyan'>1</td><td class='green'>2</td><td class='light-green'>3</td></tr>
+                <tr><td class='green'>2</td><td class='cyan'>1</td><td class='brown'>0</td><td class='cyan'>1</td><td class='green'>2</td></tr>
+                <tr><td class='light-green'>3</td><td class='green'>2</td><td class='cyan'>1</td><td class='green'>2</td><td class='light-green'>3</td></tr>
+                <tr><td class='light-green'>3</td><td class='green'>2</td><td class='green'>2</td><td class='light-green'>3</td><td class='light-green'>3</td></tr>
+            </table>
+            <i>Minimum # of Turns BFS</i>
+            <table>
+                <tr><td class='green'>2</td><td class='green'>2</td><td class='cyan'>1</td><td class='green'>2</td><td class='green'>2</td></tr>
+                <tr><td class='green'>2</td><td class='green'>2</td><td class='cyan'>1</td><td class='green'>2</td><td class='green'>2</td></tr>
+                <tr><td class='cyan'>1</td><td class='cyan'>1</td><td class='brown'>0</td><td class='cyan'>1</td><td class='cyan'>1</td></tr>
+                <tr><td class='green'>2</td><td class='green'>2</td><td class='cyan'>1</td><td class='green'>2</td><td class='green'>2</td></tr>
+                <tr><td class='green'>2</td><td class='green'>2</td><td class='cyan'>1</td><td class='green'>2</td><td class='green'>2</td></tr>
+            </table>
+        </p>
+        <p>
+            <b>A note</b>: a path with minimum turns isn't necessarily the shortest path. For example,
+            <table>
+                <tr><td class='brown unl'>0</td><td class='light-green'>1</td><td class='light-green'>2</td><td class='red'>X</td><td class='brown unl'>8/12</td></tr>
+                <tr><td class='green'>1</td><td class='red'>X</td><td class='light-green'>3</td><td class='red'>X</td><td class='cyan'>7/11</td></tr>
+                <tr><td class='green'>2</td><td class='red'>X</td><td class='light-green'>4</td><td class='light-green'>5</td><td class='cyan'>6/10</td></tr>
+                <tr><td class='green'>3</td><td class='red'>X</td><td class='red'>X</td><td class='red'>X</td><td class='green'>9</td></tr>
+                <tr><td class='green'>4</td><td class='green'>5</td><td class='green'>6</td><td class='green'>7</td><td class='green'>8</td></tr>
+            </table>
+        </p>
+ 
+        <p>
+            To also enforce the shortest path requirement (with higher priority than minimal numbers of turns), we would need to explore the paths in the order of, increasing path length first, and then increasing turns. That means each node needs to store both the path length and the number of turns. The exploration part is more like Dijkstra as each turn the overall minimal node (path length ++ turn) is popped and explored from the heap.
+        </p>
+        
+        <h2>Another Technique - Path Optimization</h2>
+        <p>
+            Another technique often used is to start with a random path and then optimize the solution until an optimal one is reached. It is used in Bellman-Ford and <a href='https://en.wikipedia.org/wiki/Simulated_annealing'>simulated annealing algorithms</a>.
+        </p>
+        <p>
+            Bellman-Ford takes a maximum of <icode>|V|</icode> iterations trying to optimize the path and the optimizing process is called <b>relaxation</b> as we are reducing the total path length.
+        </p>
+        <p>
+            Although global optimum is often what we want, we sometimes settle for relatively optimal solutions when the amount of computation required to achieve the global optimum is very large. The simulated annealing algorithm is more likely to make irrational choices that may or may not leads to a better optimum when the temperature is high. As the temperature cools down, the algorithm becomes more greedy. The local optimum keeps improving during the process until the temperature reaches a limit.
+        </p>
+ 
+        <h3>Useful Links/References:</h3>
+        <p>
+            <a href='https://cs.stackexchange.com/a/76879'>Algorithms for Finding the Shortest Path in Undirected Graphs - Stack Exchange</a>
+            <a href='https://en.wikipedia.org/wiki/Simulated_annealing'>Simulated Annealing - Wikipedia</a><br>
+        </p>
+    </div>
+</div>
+
+
+
+
+
+
+<!-- Auto-generated footer -->
+<div id='contact-root'>
+    <div id='contact-content'>
+        <a href="https://github.com/Hackerry"><i class="fab fa-github"></i></a>
+        <a href="https://www.linkedin.com/in/niu-j-ba2216194/"><i class="fab fa-linkedin-in"></i></a>
+        <a href="mailto:harrynjc@gmail.com"><i class="far fa-envelope"></i></a>
+    </div>
+</div></body></html>
